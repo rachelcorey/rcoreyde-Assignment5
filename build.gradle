@@ -1,19 +1,72 @@
 plugins {
     id 'java'
+    id "com.github.spotbugs" version "4.5.1"
+    id "checkstyle"
 }
+
+apply plugin: 'application'
+apply plugin: 'jacoco'
+apply plugin: 'java'
 
 group 'org.example'
 version '1.0-SNAPSHOT'
 
+mainClassName = 'main.java.Main'
+
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation "junit:junit:4.12"
+    implementation 'junit:junit:4.13.1'
+    implementation 'junit:junit:4.13.1'
 }
 
 test {
     useJUnitPlatform()
+    testLogging {
+        outputs.upToDateWhen {false}
+        showStandardStreams = true
+    }
+}
+
+///////////////////////////////////////////////////////////////////////
+// Configure Checkstyle
+/////////////////////////////////////////////////////////////////////
+apply plugin: 'checkstyle'
+checkstyle {
+    // Keep checkstyle a little quieter
+    configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+    ignoreFailures = true
+    showViolations = false
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        html.enabled = true
+        xml.enabled = false
+    }
+}
+checkstyle {
+    toolVersion = "8.8"
+}
+
+
+///////////////////////////////////////////////////////////////////////
+// Configure SpotBugs
+///////////////////////////////////////////////////////////////////////
+// To generate an HTML report instead of XML
+spotbugsMain {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+spotbugs {
+    toolVersion = '4.0.0-beta4'
+    ignoreFailures = true
+    showProgress = true
+    effort = 'max'
 }
