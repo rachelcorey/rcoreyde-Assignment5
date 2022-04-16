@@ -1,4 +1,4 @@
-##Introduction
+## Introduction
 
 My RPG simulator will be a robot-themed dungeon crawler
 - 3 different classes
@@ -10,9 +10,9 @@ My RPG simulator will be a robot-themed dungeon crawler
 - Each Boss on the 10th floor drops a unique item of varying strength and sometimes more items.
 - Players who lose all of their HP are sent back to the first floor of the dungeon they died in.
 
-##Chosen Requirements & Their Respective Chosen Design Patterns
+## Chosen Requirements & Their Respective Chosen Design Patterns
 
-###Observer:
+### Observer:
 - Potions should never give more Health or Mana than you have as a maximum.
 - After each floor (and after each possible random encounter with a shop) you should go back to the top floor if your health is below 15%. Going to the top floor gives you back all of your health and mana
 - During combat:
@@ -20,7 +20,7 @@ My RPG simulator will be a robot-themed dungeon crawler
   - When a participant reaches 0 or less HP, they lose the fight, if the loser is you, you lose an amount of money  **(CHANGING THIS)** you lose all your items and go back to the top floor and only gain 20
   - During either participants turn, they can either attack or use a consumable item.
 
-###Factory Method:
+### Factory Method:
 - You must be able to choose a class for your character (or have it assigned randomly), each class has a different subset of skills or magic. A class would constitute something along the lines of ’fighter’, ’mage’, ’thief’, get creative with it!
 - You should be able to choose a type for your character (or have it assigned randomly), each race should have one passive skill that gets better after leveling up or that gives them advantage over another. rate A type would constitute something like, ’orc’,’elf’, ’dwarf’, ’human’. Perhaps orcs are stronger naturally, perhaps elves are the most nimble and can dodge better, maybe humans have less HP but gain exp at a faster, get creative with it!
 - Your character should have at minimum:
@@ -30,13 +30,13 @@ My RPG simulator will be a robot-themed dungeon crawler
   - All attacks should have a chance to fail/miss
   - Attacks should deal a min damage of 1
 
-###Builder:
+### Builder:
 - You should encounter a randomly generated ’small’ enemy every floor, a ’medium’ enemy every 5 floors, and a ’BOSS’ every 10 floors.
 - All enemies should get harder for each floor you travel to, for example, an enemy on floor 2 should be much, much weaker than an enemy on floor 48!
 - Your simulation should include at least 3 temporary status effect and at least 1 permanent status effect that either hinders or helps your character in some way. Status effects could include: poisoned, burned, asleep, paralyzed, strengthened, quickened, crippled, bleeding, curse
 
 
-##Needed Classes
+## Needed Classes
 
 #### Entity
   - Stats
