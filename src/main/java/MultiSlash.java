@@ -4,7 +4,8 @@ import java.util.Random;
 
 public class MultiSlash extends Skill{
 
-    public MultiSlash() {
+    public MultiSlash(int powerModifier) {
+        super(powerModifier);
         this.name = "Multi Slash";
         this.description = "Slash the enemy up to 5 times in a row for a smaller amount of damage.";
         this.damageAmt = 3;

@@ -13,6 +13,10 @@ version '1.0-SNAPSHOT'
 
 mainClassName = 'main.java.Main'
 
+run {
+    standardInput = System.in
+}
+
 repositories {
     mavenCentral()
     jcenter()

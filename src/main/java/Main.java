@@ -1,10 +1,13 @@
 package main.java;
 
+import java.util.Scanner;
+
 public class Main {
 
     private static GameManager gameManager;
 
     public static void main(String[] args) throws InterruptedException {
+        Scanner scanner = new Scanner(System.in);
         System.out.println(" ________                         ________                             ____                                                             ");
         System.out.println("/\\_____  \\                       /\\_____  \\                           /\\  _`\\                                                           ");
         System.out.println("\\/____//'/'     __     __   _____\\/____//'/'    ___   _ __   _____    \\ \\ \\/\\ \\  __  __    ___      __      __    ___     ___     ____  ");
@@ -18,30 +21,32 @@ public class Main {
         System.out.println("Would you like to enter testing mode?");
         System.out.println("1. Yes");
         System.out.println("2. No");
-        int choice = Integer.parseInt(System.console().readLine());
+        int choice = scanner.nextInt();
         if (choice == 1) {
             createGameManager("RobotEnthusiast", "RoboGolem", PlayerType.TUNGSTENBOT, true);
         } else {
             showDialogAndStartGame();
         }
+        scanner.close();
     }
 
     private static void showDialogAndStartGame() throws InterruptedException {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("What is your name?: ");
-        String name = System.console().readLine();
+        String name = scanner.nextLine();
         System.out.println("Hello " + name + "! Zorped to meet you!");
         System.out.println("What kind of bot would you like to build today?");
         System.out.println("1. RoboGolem: A strong bot that can strike heavy physical blows to enemies.");
         System.out.println("2. RoboHacker: A clever bot that can hack other bots and render them helpless.");
         System.out.println("3. NanoBots: A group of bots that can add more to their ranks and attack as a group.");
-        int classChoice = Integer.parseInt(System.console().readLine());
+        int classChoice = scanner.nextInt();
         System.out.println("That's a great choice!");
         System.out.println("What kind of modification would you like to add to your bot?");
         System.out.println("1. Hover Module: A module that increases speed by allowing the bot to hover above the ground.");
         System.out.println("2. Extra Capacitor Couplings: A module that increases the amount of Resource your bot has.");
         System.out.println("3. Tungsten Plating: A module that greatly increases the hit points of your bot.");
         System.out.println("4. Radioactive Core: A module that increases the damage your bot can do.");
-        int moduleChoice = Integer.parseInt(System.console().readLine());
+        int moduleChoice = scanner.nextInt();
         System.out.println("That's a great choice!");
         System.out.println("We're ready to build your bot!");
         System.out.println("Just a moment......");
@@ -53,6 +58,7 @@ public class Main {
         System.out.println("Thanks for waiting....!");
         System.out.println("Your bot is ready to go!");
         Thread.sleep(2000);
+        scanner.close();
         String classChoiceString = "";
         PlayerType moduleChoiceEnum = null;
         switch (classChoice) {
