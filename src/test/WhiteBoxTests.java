@@ -11,11 +11,6 @@ public class WhiteBoxTests {
 
     @Before
     public void setUp() {
-        player = new Player(420);
     }
 
-    @Test
-    public void testPlayerConstructor() {
-        assertEquals(420, player.getHP());
-    }
 }
