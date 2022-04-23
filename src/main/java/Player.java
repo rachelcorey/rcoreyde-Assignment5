@@ -1,5 +1,7 @@
 package main.java;
 
+import java.util.ArrayList;
+
 public abstract class Player {
 
     String name;
@@ -13,7 +15,8 @@ public abstract class Player {
     StatusEffect currentStatusEffect;
     Skill physicalAttack;
     Skill[] specialSkill;
-    Item[] inventory;
+    ArrayList<Item> inventory;
+    Item currentItemBuff;
 
     public Player(String name, PlayerType playerType) {
         this.name = name;
@@ -24,7 +27,8 @@ public abstract class Player {
         this.expCurrent = 0;
         this.expRequiredToLevel = 100;
         this.currentStatusEffect = null;
-        this.inventory = new Item[10];
+        this.currentItemBuff = null;
+        this.inventory = new ArrayList<>();
         this.physicalAttack = new BasicPhysical(atkPower/2);
         this.implementPlayerType(playerType);
     }
@@ -45,16 +49,70 @@ public abstract class Player {
     };
 
     public AttackResult physicalAttack() {
-        return physicalAttack.useSkill();
+        return physicalAttack.useSkill(this.getName());
     }
 
-    public abstract AttackResult specialAttack(int atkNum);
+    public AttackResult specialAttack(int atkNum) {
+        return specialSkill[atkNum].useSkill(this.getName());
+    }
 
     public void useItem(Item item) {
+        item.use(this);
+    }
 
+    public void addHealth(int health) {
+        this.HP += health;
+    }
+
+    public void takeDamage(int damage) {
+        this.HP -= damage;
+    }
+
+    public ArrayList<Item> getInventory() {
+        return inventory;
+    }
+
+    public void increaseAtkPower(int atkPower) {
+        this.atkPower += atkPower;
+    }
+
+    public void increaseResource(int resource) {
+        this.resource.increaseCurrentAmount(resource);
+    }
+
+    public void setCurrentItemBuff(Item currentItemBuff) {
+        this.currentItemBuff = currentItemBuff;
+    }
+
+    public Item getCurrentItemBuff() {
+        return currentItemBuff;
+    }
+
+    public void setCurrentStatusEffect(StatusEffect currentStatusEffect) {
+        this.currentStatusEffect = currentStatusEffect;
+    }
+
+    public StatusEffect getCurrentStatusEffect() {
+        return currentStatusEffect;
+    }
+
+    public int getHP() {
+        return HP;
+    }
+
+    public int getAtkPower() {
+        return atkPower;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 
     public void levelUp() {
 
+    }
+
+    public String getName() {
+        return name;
     }
 }

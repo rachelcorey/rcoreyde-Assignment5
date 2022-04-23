@@ -18,7 +18,7 @@ public class MultiSlash extends Skill{
     }
 
     @Override
-    public AttackResult useSkill() {
+    public AttackResult useSkill(String nameOfUser) {
         this.hitNumber = hitNumber();
         this.damageAmt *= this.hitNumber;
         return new AttackResult( name + " hit " + hitNumber + " times and did " + damageAmt + " damage!", damageAmt, null);

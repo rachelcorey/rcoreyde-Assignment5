@@ -23,7 +23,15 @@ public abstract class Resource {
         return currentAmount;
     }
 
+    public void increaseCurrentAmount(int amount) {
+        currentAmount += amount;
+    }
+
     public int getTotalAmount() {
         return totalAmount;
+    }
+
+    public String getName() {
+        return name;
     }
 }

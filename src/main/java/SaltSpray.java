@@ -1,5 +1,7 @@
 package main.java;
 
+import java.util.Random;
+
 public class SaltSpray extends Skill {
 
     public SaltSpray(int damageModifier) {
@@ -14,4 +16,5 @@ public class SaltSpray extends Skill {
         this.numberOfTurnsToCast = 1;
         this.statusEffect = new Rust(damageModifier + damageAmt, 100);
     }
+
 }

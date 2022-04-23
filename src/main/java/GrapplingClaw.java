@@ -9,4 +9,15 @@ public class GrapplingClaw extends Item {
                 "advance " + level + " floors. Cannot be used on Boss fights.";
         this.amtOfEffect = level;
     }
+
+    @Override
+    public void use(Enemy enemy) {
+        // enemy cannot use this item
+    }
+
+    @Override
+    public void use(Player player) {
+        // TODO: implement
+        System.out.println("not implemented yet.");
+    }
 }

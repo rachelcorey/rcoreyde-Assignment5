@@ -9,4 +9,12 @@ public abstract class StatusEffect {
         this.power = power;
         this.numOfTurns = numOfTurns;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPower() {
+        return power;
+    }
 }

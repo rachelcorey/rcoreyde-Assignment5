@@ -8,7 +8,7 @@ public class Dungeon {
     Floor currentFloor;
 
     public Dungeon(int number, int numberOfFloors) {
-        this.number = number;
+        this.number = number + 1;
         floors = generateFloors(numberOfFloors);
         currentFloor = floors.get(0);
     }
@@ -19,6 +19,10 @@ public class Dungeon {
             floors.add(new Floor(i));
         }
         return floors;
+    }
+
+    public void ascendToNextFloor() {
+        currentFloor = floors.get(currentFloor.getNumber() + 1);
     }
 
     public Floor getCurrentFloor() {

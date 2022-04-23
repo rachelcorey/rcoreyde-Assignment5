@@ -23,7 +23,7 @@ public class Main {
         System.out.println("2. No");
         int choice = scanner.nextInt();
         if (choice == 1) {
-            createGameManager("RobotEnthusiast", "RoboGolem", PlayerType.TUNGSTENBOT, true);
+            createGameManager("RobotEnthusiast", "ROBOGOLEM", PlayerType.TUNGSTENBOT, true);
         } else {
             showDialogAndStartGame();
         }
@@ -91,7 +91,7 @@ public class Main {
 
     private static void createGameManager(String playerName, String playerClass, PlayerType playerType, boolean testMode) {
         if (gameManager == null) {
-            gameManager = new GameManager(playerName, playerClass, playerType, testMode);
+            gameManager = new GameManager(playerName, playerClass, playerType, testMode, true);
         }
     }
 }

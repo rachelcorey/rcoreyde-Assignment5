@@ -16,8 +16,4 @@ public class RoboGolem extends Player {
         this.physicalAttack.damageAmt += this.atkPower;
     }
 
-    @Override
-    public AttackResult specialAttack(int atkNum) {
-        return null;
-    }
 }
