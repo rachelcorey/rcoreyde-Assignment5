@@ -9,6 +9,7 @@ public class PlayerFactory {
                 player = new RoboGolem(name, playerType);
                 break;
             case "ROBOHACKER":
+                player = new RoboHacker(name, playerType);
                 break;
             case "NANOBOTS":
                 break;

@@ -18,6 +18,7 @@ public abstract class Player {
     Skill[] specialSkill;
     ArrayList<Item> inventory;
     Item currentItemBuff;
+    boolean isCasting;
 
     public Player(String name, PlayerType playerType) {
         this.name = name;
@@ -26,6 +27,7 @@ public abstract class Player {
         this.speed = 10;
         this.atkPower = 5;
         this.level = 1;
+        this.isCasting = false;
         this.expCurrent = 0;
         this.expRequiredToLevel = 100;
         this.currentStatusEffect = null;
@@ -171,4 +173,18 @@ public abstract class Player {
     public void emptyInventory() {
         this.inventory.clear();
     }
+
+    public boolean isCasting() {
+        return isCasting;
+    }
+
+    public void setCasting(boolean casting) {
+        isCasting = casting;
+    }
+
+    public int getTotalHP() {
+        return totalHP;
+    }
+
+    public abstract void resetSpells();
 }

@@ -1,24 +1,27 @@
 package main.java;
 
-public class RoboGolem extends Player {
+public class RoboHacker extends Player {
 
-    public RoboGolem(String name, PlayerType playerType) {
+
+    public RoboHacker(String name, PlayerType playerType) {
         super(name, playerType);
-        this.speed -= 5;
+        this.currentHP = 20;
+        this.totalHP = 20;
         // Assign unique skills for player class
         // Pass the power modifier to the skill based on strength
-        this.resource = new Steam();
+        this.resource = new QuantumIons();
         this.specialSkill = new Skill[2];
-        specialSkill[0] = new HeavyBlow(this.atkPower);
+        specialSkill[0] = new FastHack(this.atkPower);
         this.specialSkill[0].damageAmt += this.atkPower;
-        specialSkill[1] = new MultiSlash(this.atkPower);
+        specialSkill[1] = new SlowHack(this.atkPower + 10);
         this.specialSkill[1].damageAmt += this.atkPower;
         this.physicalAttack.damageAmt += this.atkPower;
     }
 
     @Override
     public void resetSpells() {
-        // not applicable to this class
+        specialSkill[1] = new SlowHack(this.atkPower);
+        this.specialSkill[1].damageAmt += this.atkPower;
     }
 
 }

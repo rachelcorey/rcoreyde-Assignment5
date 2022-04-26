@@ -7,6 +7,7 @@ import static java.lang.System.exit;
 
 public class GameManager {
 
+    private static GameManager INSTANCE;
     Player player;
     boolean testMode;
     boolean isHumanPlayerGame;
@@ -20,6 +21,7 @@ public class GameManager {
 
     public GameManager(String playerName, String playerClass, PlayerType playerType, boolean testMode, boolean isHumanPlayerGame) {
         player = PlayerFactory.createPlayer(playerName, playerClass, playerType);
+        INSTANCE = this;
         this.testMode = testMode;
         this.isHumanPlayerGame = isHumanPlayerGame;
         if (testMode) {
@@ -33,6 +35,10 @@ public class GameManager {
         currentDungeon = worldMap.get(0);
         isGameActive = true;
         conductHumanPlayerGame();
+    }
+
+    public static GameManager getInstance() {
+        return INSTANCE;
     }
 
     private ArrayList<Dungeon> generateWorldMap() {
@@ -178,6 +184,7 @@ public class GameManager {
             if (currentEnemy.getCurrentHP() <= 0) {
                 isBattleOver = true;
                 player.setCurrentStatusEffect(null);
+                player.resetSpells();
                 System.out.println("You have defeated " + currentEnemy.getName() + "!");
                 System.out.println("");
                 System.out.println("You gained " + currentEnemy.getExpAwarded() + " experience!");
@@ -211,6 +218,9 @@ public class GameManager {
     private void processPlayerLoss() {
         playerJustLost = true;
         player.emptyInventory();
+        player.setCurrentHP(player.getTotalHP());
+        player.setCasting(false);
+        player.resetSpells();
         currentDungeon.setCurrentFloor(0);
     }
 
@@ -250,53 +260,56 @@ public class GameManager {
     public AttackResult displayTurnMenu() {
         Scanner scanner = new Scanner(System.in);
         AttackResult result = null;
-
         boolean isValidInput = false;
 
-        while (!isValidInput) {
-            System.out.println("What would you like to do?");
-            System.out.println("1. Attack");
-            if (player.getInventory().size() > 0) {
-                System.out.println("2. Use Item");
-            }
-            int choice = scanner.nextInt();
-            if (choice == 1) {
-                System.out.println("What attack would you like to use?");
-                System.out.println("1. Basic Attack");
-                System.out.println("2. Special Attack");
-                choice = scanner.nextInt();
+        if (!player.isCasting()) {
+            while (!isValidInput) {
+                System.out.println("What would you like to do?");
+                System.out.println("1. Attack");
+                if (player.getInventory().size() > 0) {
+                    System.out.println("2. Use Item");
+                }
+                int choice = scanner.nextInt();
                 if (choice == 1) {
-                    result = player.physicalAttack();
-                    isValidInput = true;
-                } else {
-                    System.out.println("Which special attack would you like to use?");
-                    System.out.println("1. " + player.specialSkill[0].getName());
-                    System.out.println("2. " + player.specialSkill[1].getName());
+                    System.out.println("What attack would you like to use?");
+                    System.out.println("1. Basic Attack");
+                    System.out.println("2. Special Attack");
                     choice = scanner.nextInt();
                     if (choice == 1) {
-                        result = player.specialAttack(0);
+                        result = player.physicalAttack();
                         isValidInput = true;
                     } else {
-                        result = player.specialAttack(1);
-                        isValidInput = true;
+                        System.out.println("Which special attack would you like to use?");
+                        System.out.println("1. " + player.specialSkill[0].getName());
+                        System.out.println("2. " + player.specialSkill[1].getName());
+                        choice = scanner.nextInt();
+                        if (choice == 1) {
+                            result = player.specialAttack(0);
+                            isValidInput = true;
+                        } else {
+                            result = player.specialAttack(1);
+                            isValidInput = true;
+                        }
                     }
+                } else if (choice == 2 && player.getInventory().size() > 0) {
+                    System.out.println("Which item would you like to use?");
+                    int count = 1;
+                    for (Item item : player.getInventory()) {
+                        System.out.println(count + ". " + item.getName());
+                        count++;
+                    }
+                    choice = scanner.nextInt();
+                    player.useItem(player.getInventory().get(choice - 1));
+                    result = new AttackResult("", 0,0,  null);
+                    isValidInput = true;
+                } else {
+                    System.out.println("Invalid choice!");
                 }
-            } else if (choice == 2 && player.getInventory().size() > 0) {
-                System.out.println("Which item would you like to use?");
-                int count = 1;
-                for (Item item : player.getInventory()) {
-                    System.out.println(count + ". " + item.getName());
-                    count++;
-                }
-                choice = scanner.nextInt();
-                player.useItem(player.getInventory().get(choice - 1));
-                result = new AttackResult("", 0,0,  null);
-                isValidInput = true;
-            } else {
-                System.out.println("Invalid choice!");
             }
+        } else {
+            System.out.println("You are currently casting a spell!");
+            result = player.specialAttack(1);
         }
-
         return result;
     }
 
@@ -308,4 +321,7 @@ public class GameManager {
         return null;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
 }
