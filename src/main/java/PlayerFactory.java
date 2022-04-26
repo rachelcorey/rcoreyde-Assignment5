@@ -12,6 +12,7 @@ public class PlayerFactory {
                 player = new RoboHacker(name, playerType);
                 break;
             case "NANOBOTS":
+                player = new NanoBots(name, playerType);
                 break;
         }
 

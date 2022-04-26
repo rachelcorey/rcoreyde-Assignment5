@@ -23,7 +23,7 @@ public class Main {
         System.out.println("2. No");
         int choice = scanner.nextInt();
         if (choice == 1) {
-            createGameManager("RobotEnthusiast", "ROBOHACKER", PlayerType.HOVERBOT, true);
+            createGameManager("RobotEnthusiast", "NANOBOTS", PlayerType.RADIOACTIVEBOT, true);
         } else {
             showDialogAndStartGame();
         }

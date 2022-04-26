@@ -30,7 +30,7 @@ public class PhysicalEnemyBuilder implements EnemyBuilder {
 
     @Override
     public void buildInventory() {
-        int maxItems = 3;
+        int maxItems = 2;
         Random random = new Random();
         int numItems = random.nextInt(maxItems) + 1;
         for (int i = 0; i < numItems; i++) {

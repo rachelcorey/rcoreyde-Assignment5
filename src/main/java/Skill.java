@@ -37,4 +37,8 @@ public abstract class Skill {
     public void increaseDamageAmt(int amt) {
         this.damageAmt += amt;
     }
+
+    public String getDescription() {
+        return description;
+    }
 }

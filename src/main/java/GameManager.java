@@ -20,8 +20,8 @@ public class GameManager {
     ArrayList<Dungeon> worldMap;
 
     public GameManager(String playerName, String playerClass, PlayerType playerType, boolean testMode, boolean isHumanPlayerGame) {
-        player = PlayerFactory.createPlayer(playerName, playerClass, playerType);
         INSTANCE = this;
+        player = PlayerFactory.createPlayer(playerName, playerClass, playerType);
         this.testMode = testMode;
         this.isHumanPlayerGame = isHumanPlayerGame;
         if (testMode) {
@@ -230,6 +230,9 @@ public class GameManager {
     }
 
     private void printPlayerStats() {
+        if (player instanceof NanoBots) {
+            System.out.println("Current number of NanoBots: " + ((NanoBots) player).getNumBots());
+        }
         System.out.println("Your HP: " + player.getCurrentHP() + " | Your " + player.resource.getName() + " " +
                 "amount: " + player.resource.getCurrentAmount() + " | Your Attack: " + player.getAtkPower() + " | Your Speed: " + player.getSpeed());
         System.out.println("Your Level: " + player.getLevel() + " | XP: " + player.getExpCurrent() + " / " + player.getExpRequiredToLevel());
@@ -280,8 +283,8 @@ public class GameManager {
                         isValidInput = true;
                     } else {
                         System.out.println("Which special attack would you like to use?");
-                        System.out.println("1. " + player.specialSkill[0].getName());
-                        System.out.println("2. " + player.specialSkill[1].getName());
+                        System.out.println("1. " + player.specialSkill[0].getName() + ": " + player.specialSkill[0].getDescription());
+                        System.out.println("2. " + player.specialSkill[1].getName() + ": " + player.specialSkill[1].getDescription());
                         choice = scanner.nextInt();
                         if (choice == 1) {
                             result = player.specialAttack(0);
