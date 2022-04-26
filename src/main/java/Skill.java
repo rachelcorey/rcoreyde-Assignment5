@@ -41,4 +41,8 @@ public abstract class Skill {
     public String getDescription() {
         return description;
     }
+
+    public int getCost() {
+        return resourceCost;
+    }
 }

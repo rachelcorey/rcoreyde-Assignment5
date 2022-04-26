@@ -99,7 +99,6 @@ public class GameManager {
                         handleTurn(true);
                     }
                 }
-
             }
             if (!playerJustLost) {
                 printFloorNavigation();
@@ -232,7 +231,7 @@ public class GameManager {
 
     private void printPlayerStats() {
         if (player instanceof NanoBots) {
-            System.out.println("Current number of NanoBots: " + ((NanoBots) player).getBaseNumOfBots());
+            System.out.println("Current number of NanoBots: " + ((NanoBots) player).getNumOfBots());
         }
         System.out.println("Your HP: " + player.getCurrentHP() + " | Your " + player.resource.getName() + " " +
                 "amount: " + player.resource.getCurrentAmount() + " | Your Attack: " + player.getAtkPower() + " | Your Speed: " + player.getSpeed());
@@ -284,15 +283,23 @@ public class GameManager {
                         isValidInput = true;
                     } else {
                         System.out.println("Which special attack would you like to use?");
-                        System.out.println("1. " + player.specialSkill[0].getName() + ": " + player.specialSkill[0].getDescription());
-                        System.out.println("2. " + player.specialSkill[1].getName() + ": " + player.specialSkill[1].getDescription());
+                        System.out.println("1. " + player.specialSkill[0].getName() + ": " + player.specialSkill[0].getDescription() + " | Cost: " + player.specialSkill[0].getCost());
+                        System.out.println("2. " + player.specialSkill[1].getName() + ": " + player.specialSkill[1].getDescription() + " | Cost: " + player.specialSkill[1].getCost());
                         choice = scanner.nextInt();
                         if (choice == 1) {
-                            result = player.specialAttack(0);
-                            isValidInput = true;
+                            if (player.specialSkill[0].getCost() <= player.resource.getCurrentAmount()) {
+                                result = player.specialAttack(0);
+                                isValidInput = true;
+                            } else {
+                                System.out.println("You do not have enough resource to use this special attack!");
+                            }
                         } else {
-                            result = player.specialAttack(1);
-                            isValidInput = true;
+                            if (player.specialSkill[1].getCost() <= player.resource.getCurrentAmount()) {
+                                result = player.specialAttack(1);
+                                isValidInput = true;
+                            } else {
+                                System.out.println("You do not have enough resource to use this special attack!");
+                            }
                         }
                     }
                 } else if (choice == 2 && player.getInventory().size() > 0) {
@@ -304,6 +311,7 @@ public class GameManager {
                     }
                     choice = scanner.nextInt();
                     player.useItem(player.getInventory().get(choice - 1));
+                    player.getInventory().remove(player.getInventory().get(choice - 1));
                     result = new AttackResult("", 0,0,  null);
                     isValidInput = true;
                 } else {

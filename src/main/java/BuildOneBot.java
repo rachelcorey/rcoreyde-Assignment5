@@ -14,7 +14,7 @@ public class BuildOneBot extends Skill {
     @Override
     public AttackResult useSkill(String nameOfUser) {
         NanoBots player = (NanoBots) GameManager.getInstance().getPlayer();
-        player.addOneBot();
+        player.addOneBotEach();
         return new AttackResult( nameOfUser + "'s Bots each built one bot each! " + nameOfUser + " now has " + (player.getBaseNumOfBots() + 1) + " bots!",
                 0, resourceCost, this.statusEffect);
     }

@@ -13,7 +13,7 @@ public class BasicPhysicalNanobots extends BasicPhysical {
     @Override
     public AttackResult useSkill(String nameOfUser) {
         NanoBots player = (NanoBots) GameManager.getInstance().getPlayer();
-        totalDamage = player.getBaseNumOfBots() * damageAmt;
+        totalDamage = player.getNumOfBots() * damageAmt;
         Random rand = new Random();
         if (rand.nextInt(100) < 100 * percentToMiss) {
             return new AttackResult("Each of " + nameOfUser + "'s Nanobots' " + name + " missed!", 0, resourceCost, null);

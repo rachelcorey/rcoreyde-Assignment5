@@ -16,42 +16,69 @@ public class NanoBots extends Player {
         for (int i = 0; i < baseNumOfBots; i++) {
             bots.add(new IndividualNanoBot(maxHPperBot));
         }
-        this.currentHP = baseNumOfBots * 5;
-        this.totalHP = baseNumOfBots * 5;
+        this.currentHP = baseNumOfBots * maxHPperBot;
+        this.totalHP = baseNumOfBots * maxHPperBot;
         this.atkPower = 3;
         // Assign unique skills for player class
         // Pass the power modifier to the skill based on strength
         this.resource = new MagneticCohesion();
         this.specialSkill = new Skill[2];
         specialSkill[0] = new BuildOneBot(this.atkPower);
-        specialSkill[1] = new SlowHack(this.atkPower + 10);
+        specialSkill[1] = new BuildFourBots(this.atkPower);
         this.physicalAttack = new BasicPhysicalNanobots(atkPower/2);
         this.physicalAttack.damageAmt = this.atkPower;
     }
 
     @Override
     public void resetSpells() {
-        int currentNumBots = bots.size();
-        if (bots.size() > baseNumOfBots) {
-            for (int i = 0; i < bots.size(); i++) {
-                IndividualNanoBot bot = bots.get(i);
-                if (bots.size() >= baseNumOfBots) {
+        if (this.getCurrentHP() > 0) {
+            int botOverflow = bots.size() - baseNumOfBots;
+            if (bots.size() != baseNumOfBots) {
+                for (int i = botOverflow; i > 0; i--) {
+                    IndividualNanoBot bot = bots.get(i);
                     bots.remove(bot);
                 }
             }
+            System.out.println("Bots were reset to " + baseNumOfBots + ". Any injured bots were recycled!");
+        } else {
+           resetHP();
         }
-//        if (bots.size() < numBots) {
-//            for (int i = 0; i < numBots - bots.size(); i++) {
-//                bots.add(new IndividualNanoBot(bots.size()));
-//            }
-//        }
-        System.out.println("Bots were reset to " + baseNumOfBots + ". Any injured bots were recycled!");
+    }
+
+    public void resetHP() {
+        this.currentHP = baseNumOfBots * maxHPperBot;
+        this.totalHP = baseNumOfBots * maxHPperBot;
+        this.resource = new MagneticCohesion();
+        for (int i = 0; i < baseNumOfBots; i++) {
+            bots.add(new IndividualNanoBot(maxHPperBot));
+        }
+        System.out.println("Bots have been rebuilt. HP was reset to " + currentHP + ".");
     }
 
     public void addMultipleBots(int numBots) {
         for (int i = 0; i < numBots; i++) {
             bots.add(new IndividualNanoBot(maxHPperBot));
         }
+    }
+
+    @Override
+    public void levelUp() {
+        this.level++;
+        this.expRequiredToLevel += 150;
+        this.baseNumOfBots += 1;
+        this.maxHPperBot += 1;
+        System.out.println("Base number of bots increased by 1!");
+        bots.clear();
+        for (int i = 0; i < baseNumOfBots; i++) {
+            bots.add(new IndividualNanoBot(maxHPperBot));
+        }
+        this.currentHP = baseNumOfBots * maxHPperBot;
+        this.totalHP = baseNumOfBots * maxHPperBot;
+        this.speed += 2;
+        this.atkPower += 1;
+        this.resource.increaseTotalAmount(4);
+        this.resource.restoreFullAmount();
+        this.physicalAttack.increaseDamageAmt(2);
     }
 
     @Override
@@ -74,14 +101,26 @@ public class NanoBots extends Player {
         return total;
     }
 
-    public void addOneBot() {
+    public void addOneBotEach() {
         int numBots = bots.size();
         for (int i = 0; i < numBots - 1; i++) {
             bots.add(new IndividualNanoBot(maxHPperBot));
         }
     }
 
+
+    public void addFourBotsEach() {
+        int numBotsToBuild = bots.size() * 4;
+        for (int i = 0; i < numBotsToBuild; i++) {
+            bots.add(new IndividualNanoBot(maxHPperBot));
+        }
+    }
+
     public int getBaseNumOfBots() {
+        return baseNumOfBots;
+    }
+
+    public int getNumOfBots() {
         return bots.size();
     }
 }
