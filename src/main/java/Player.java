@@ -93,6 +93,7 @@ public abstract class Player {
         return currentItemBuff;
     }
 
+
     public void setCurrentStatusEffect(StatusEffect currentStatusEffect) {
         this.currentStatusEffect = currentStatusEffect;
     }

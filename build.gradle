@@ -1,5 +1,5 @@
+
 plugins {
-    id 'java'
     id "com.github.spotbugs" version "4.5.1"
     id "checkstyle"
 }
@@ -8,32 +8,35 @@ apply plugin: 'application'
 apply plugin: 'jacoco'
 apply plugin: 'java'
 
-group 'org.example'
-version '1.0-SNAPSHOT'
-
-mainClassName = 'main.java.Main'
-
-run {
-    standardInput = System.in
-}
-
-repositories {
-    mavenCentral()
-    jcenter()
-}
-
-dependencies {
-    implementation "junit:junit:4.12"
-    implementation 'junit:junit:4.13.1'
-    implementation 'junit:junit:4.13.1'
-}
-
 test {
-    useJUnitPlatform()
+
+    exclude '**/BlackBoxGiven.class'
+
     testLogging {
         outputs.upToDateWhen {false}
         showStandardStreams = true
     }
+}
+
+mainClassName = 'main.java.Main'
+
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    jcenter()
+}
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+    implementation "junit:junit:4.12"
+    implementation files('cls/')
+    implementation 'junit:junit:4.13.1'
+    implementation 'junit:junit:4.13.1'
+    implementation 'junit:junit:4.13.1'
+    implementation 'junit:junit:4.13.1'
+    implementation 'junit:junit:4.13.1'
+    implementation 'junit:junit:4.13.1'
+    implementation 'junit:junit:4.13.1'
 }
 
 ///////////////////////////////////////////////////////////////////////
