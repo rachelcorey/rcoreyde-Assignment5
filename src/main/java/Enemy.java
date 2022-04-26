@@ -31,21 +31,21 @@ public class Enemy implements EnemyPlan {
                 this.setMaxHP(12 + floorNum);
                 this.setSpeed((int) (10 * 1 + (Math.ceil(floorNum / 2))));
                 this.setAtkPower((int) (3 * 1 + (Math.ceil(floorNum / 2))));
-                this.setExpAwarded(50 * floorNum);
+                this.setExpAwarded(50 * (1 + floorNum));
                 break;
             case 1:
                 this.setLevel(2 + floorNum);
                 this.setMaxHP(20 + floorNum);
                 this.setSpeed((int) (12 * (Math.floor(floorNum / 2))));
                 this.setAtkPower((int) (5 * (Math.floor(floorNum / 2))));
-                this.setExpAwarded(100 * floorNum);
+                this.setExpAwarded(100 * (1 + floorNum));
                 break;
             case 2:
                 this.setLevel(3 + floorNum);
                 this.setMaxHP(30 + floorNum);
                 this.setSpeed((int) (18 * (Math.floor(floorNum / 2))));
                 this.setAtkPower((int) (8 * (Math.floor(floorNum / 2))));
-                this.setExpAwarded(200 * floorNum);
+                this.setExpAwarded(200 * (1 + floorNum));
                 break;
         }
         this.setCurrentHP(maxHP);
@@ -77,7 +77,7 @@ public class Enemy implements EnemyPlan {
             if (inventory.size() > 0 && this.getCurrentHP() < this.getMaxHP()) {
                 System.out.println(name + " is using a " + inventory.get(0).getName() + "!: " + inventory.get(0).getDescription());
                 useItem(inventory.get(0));
-                result = new AttackResult("",0,null);
+                result = new AttackResult("",0,0, null);
             } else {
                 result = attack();
             }
@@ -213,4 +213,5 @@ public class Enemy implements EnemyPlan {
     public int getCurrentHP() {
         return currentHP;
     }
+
 }

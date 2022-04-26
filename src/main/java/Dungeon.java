@@ -1,6 +1,7 @@
 package main.java;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Dungeon {
     int number;
@@ -22,7 +23,8 @@ public class Dungeon {
     }
 
     public void ascendToNextFloor() {
-        currentFloor = floors.get(currentFloor.getNumber() + 1);
+        floors.remove(0);
+        currentFloor = floors.get(0);
     }
 
     public Floor getCurrentFloor() {

@@ -17,6 +17,8 @@ public class RepairKit extends Item {
 
     @Override
     public void use(Player player) {
-
+        player.addHealth(amtOfEffect);
+        player.addResource(amtOfEffect);
+        System.out.println("Player was healed by " + amtOfEffect + " HP and gained " + amtOfEffect + " Resource!");
     }
 }

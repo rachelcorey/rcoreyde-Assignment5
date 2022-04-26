@@ -21,9 +21,9 @@ public abstract class Skill {
     public AttackResult useSkill(String nameOfUser) {
         Random rand = new Random();
         if (rand.nextInt(100) < 100 * percentToMiss) {
-            return new AttackResult(nameOfUser + "'s " + name + " missed!", 0, null);
+            return new AttackResult(nameOfUser + "'s " + name + " missed!", 0, resourceCost, null);
         }
-        return new AttackResult(nameOfUser + "'s " + name + " did " + damageAmt + " damage!", damageAmt, statusEffect);
+        return new AttackResult(nameOfUser + "'s " + name + " did " + damageAmt + " damage!", damageAmt, resourceCost, statusEffect);
     }
 
     public void setDamageAmt(int damageAmt) {
@@ -32,5 +32,9 @@ public abstract class Skill {
 
     public String getName() {
         return name;
+    }
+
+    public void increaseDamageAmt(int amt) {
+        this.damageAmt += amt;
     }
 }

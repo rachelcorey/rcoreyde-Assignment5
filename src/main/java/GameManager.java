@@ -57,6 +57,7 @@ public class GameManager {
             currentEnemy = currentDungeon.getCurrentFloor().getEnemy();
             System.out.println("You are in dungeon " + currentDungeon.getNumber() + " on Floor " +
                     "number " + currentDungeon.getCurrentFloor().getNumber() + "!");
+            System.out.println("");
             boolean isBattleOver = false;
 
             System.out.println("You are now facing " + currentEnemy.getName() + "!");
@@ -108,6 +109,11 @@ public class GameManager {
                     isBattleOver = true;
                     System.out.println("You have defeated " + currentEnemy.getName() + "!");
                     System.out.println("");
+                    System.out.println("You gained " + currentEnemy.getExpAwarded() + " experience!");
+                    boolean didLevel = player.addExp(currentEnemy.getExpAwarded());
+                    if (didLevel) {
+                        System.out.println("You have leveled up!");
+                    }
                     if (currentEnemy.getLoot().size() > 0) {
                         System.out.println("The enemy dropped the following items:");
                         for (Item item : currentEnemy.getLoot()) {
@@ -120,7 +126,7 @@ public class GameManager {
                         System.out.println("");
                     }
                 }
-                if (player.getHP() <= 0) {
+                if (player.getCurrentHP() <= 0) {
                     isBattleOver = true;
                     System.out.println("You have died!");
                     System.out.println("Going back to the beginning of the dungeon.....");
@@ -144,8 +150,14 @@ public class GameManager {
 
     private void printCurrentStatsOfBattle() {
         System.out.println("Enemy's HP: " + currentEnemy.getCurrentHP() + " | Enemy's Attack: " + currentEnemy.getAtkPower() + " | Enemy's Speed: " + currentEnemy.getSpeed());
-        System.out.println("Your HP: " + player.getHP() + " | Your " + player.resource.getName() + " " +
+        printPlayerStats();
+    }
+
+    private void printPlayerStats() {
+        System.out.println("Your HP: " + player.getCurrentHP() + " | Your " + player.resource.getName() + " " +
                 "amount: " + player.resource.getCurrentAmount() + " | Your Attack: " + player.getAtkPower() + " | Your Speed: " + player.getSpeed());
+        System.out.println("Your Level: " + player.getLevel() + " | XP: " + player.getExpCurrent() + " / " + player.getExpRequiredToLevel());
+        System.out.println("");
     }
 
     private void handleResult(AttackResult result, boolean isPlayerTurn) {
@@ -163,6 +175,9 @@ public class GameManager {
             } else {
                 currentEnemy.setCurrentStatusEffect(result.getStatusEffect());
             }
+        }
+        if (result.getResourceSpent() > 0) {
+            player.useResource(result.getResourceSpent());
         }
     }
 
@@ -210,7 +225,7 @@ public class GameManager {
                 }
                 choice = scanner.nextInt();
                 player.useItem(player.getInventory().get(choice - 1));
-                result = new AttackResult("", 0, null);
+                result = new AttackResult("", 0,0,  null);
                 isValidInput = true;
             } else {
                 System.out.println("Invalid choice!");

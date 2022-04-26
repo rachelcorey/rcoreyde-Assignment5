@@ -27,4 +27,5 @@ public class PowerConduit extends Item {
             this.incrementTurnsUsedSoFar();
         }
     }
+
 }

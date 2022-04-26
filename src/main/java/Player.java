@@ -6,7 +6,8 @@ public abstract class Player {
 
     String name;
     int level;
-    int HP;
+    int currentHP;
+    int totalHP;
     int speed;
     int atkPower;
     Resource resource;
@@ -20,7 +21,8 @@ public abstract class Player {
 
     public Player(String name, PlayerType playerType) {
         this.name = name;
-        this.HP = 20;
+        this.currentHP = 20;
+        this.totalHP = 20;
         this.speed = 10;
         this.atkPower = 5;
         this.level = 1;
@@ -41,7 +43,8 @@ public abstract class Player {
             this.resource.setCurrentAmount(newResourceAmt);
             this.resource.setTotalAmount(newResourceAmt);
         } else if (playerType.equals(PlayerType.TUNGSTENBOT)) {
-            this.HP = 40;
+            this.totalHP = 40;
+            this.currentHP = 40;
         } else if (playerType.equals(PlayerType.RADIOACTIVEBOT)) {
             this.atkPower = 10;
             this.physicalAttack.setDamageAmt(5);
@@ -61,11 +64,11 @@ public abstract class Player {
     }
 
     public void addHealth(int health) {
-        this.HP += health;
+        this.currentHP += health;
     }
 
     public void takeDamage(int damage) {
-        this.HP -= damage;
+        this.currentHP -= damage;
     }
 
     public ArrayList<Item> getInventory() {
@@ -96,8 +99,8 @@ public abstract class Player {
         return currentStatusEffect;
     }
 
-    public int getHP() {
-        return HP;
+    public int getCurrentHP() {
+        return currentHP;
     }
 
     public int getAtkPower() {
@@ -109,10 +112,51 @@ public abstract class Player {
     }
 
     public void levelUp() {
+        this.level++;
+        this.expRequiredToLevel += 150;
+        this.currentHP += 10;
+        this.totalHP += 10;
+        this.speed += 5;
+        this.atkPower += 5;
+        this.resource.increaseTotalAmount(10);
+        this.resource.restoreFullAmount();
+        this.physicalAttack.increaseDamageAmt(5);
+        this.specialSkill[0].increaseDamageAmt(5);
+        this.specialSkill[1].increaseDamageAmt(5);
+    }
 
+    public void useResource(int resource) {
+        this.resource.decreaseCurrentAmount(resource);
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getExpCurrent() {
+        return expCurrent;
+    }
+
+    public int getExpRequiredToLevel() {
+        return expRequiredToLevel;
+    }
+
+    public boolean addExp(int exp) {
+        this.expCurrent += exp;
+        if (this.expCurrent >= this.expRequiredToLevel) {
+            int rollover = this.expCurrent - this.expRequiredToLevel;
+            this.expCurrent = rollover;
+            this.levelUp();
+            return true;
+        }
+        return false;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void addResource(int resource) {
+        this.resource.increaseCurrentAmount(resource);
     }
 }
