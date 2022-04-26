@@ -5,19 +5,19 @@ import java.util.ArrayList;
 public class NanoBots extends Player {
 
     ArrayList<IndividualNanoBot> bots;
-    int numBots;
+    int baseNumOfBots;
     int maxHPperBot;
 
     public NanoBots(String name, PlayerType playerType) {
         super(name, playerType);
-        this.numBots = 3;
+        this.baseNumOfBots = 3;
         this.maxHPperBot = 5;
-        bots = new ArrayList<>(numBots);
-        for (int i = 0; i < numBots; i++) {
+        bots = new ArrayList<>(baseNumOfBots);
+        for (int i = 0; i < baseNumOfBots; i++) {
             bots.add(new IndividualNanoBot(maxHPperBot));
         }
-        this.currentHP = numBots * 5;
-        this.totalHP = numBots * 5;
+        this.currentHP = baseNumOfBots * 5;
+        this.totalHP = baseNumOfBots * 5;
         this.atkPower = 3;
         // Assign unique skills for player class
         // Pass the power modifier to the skill based on strength
@@ -31,12 +31,12 @@ public class NanoBots extends Player {
 
     @Override
     public void resetSpells() {
-        if (bots.size() > numBots) {
-            for (IndividualNanoBot bot : bots) {
-                if (bots.size() > numBots) {
-                    if (bot.getCurrentHP() < bot.getMaxHP()) {
-                        bots.remove(bot);
-                    }
+        int currentNumBots = bots.size();
+        if (bots.size() > baseNumOfBots) {
+            for (int i = 0; i < bots.size(); i++) {
+                IndividualNanoBot bot = bots.get(i);
+                if (bots.size() >= baseNumOfBots) {
+                    bots.remove(bot);
                 }
             }
         }
@@ -45,7 +45,13 @@ public class NanoBots extends Player {
 //                bots.add(new IndividualNanoBot(bots.size()));
 //            }
 //        }
-        System.out.println("Bots were reset to " + bots.size() + ". Any injured bots were recycled!");
+        System.out.println("Bots were reset to " + baseNumOfBots + ". Any injured bots were recycled!");
+    }
+
+    public void addMultipleBots(int numBots) {
+        for (int i = 0; i < numBots; i++) {
+            bots.add(new IndividualNanoBot(maxHPperBot));
+        }
     }
 
     @Override
@@ -75,7 +81,7 @@ public class NanoBots extends Player {
         }
     }
 
-    public int getNumBots() {
+    public int getBaseNumOfBots() {
         return bots.size();
     }
 }

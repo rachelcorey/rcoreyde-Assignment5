@@ -34,6 +34,7 @@ public class GameManager {
         this.worldMap = generateWorldMap();
         currentDungeon = worldMap.get(0);
         isGameActive = true;
+        printPlayerStats();
         conductHumanPlayerGame();
     }
 
@@ -231,7 +232,7 @@ public class GameManager {
 
     private void printPlayerStats() {
         if (player instanceof NanoBots) {
-            System.out.println("Current number of NanoBots: " + ((NanoBots) player).getNumBots());
+            System.out.println("Current number of NanoBots: " + ((NanoBots) player).getBaseNumOfBots());
         }
         System.out.println("Your HP: " + player.getCurrentHP() + " | Your " + player.resource.getName() + " " +
                 "amount: " + player.resource.getCurrentAmount() + " | Your Attack: " + player.getAtkPower() + " | Your Speed: " + player.getSpeed());

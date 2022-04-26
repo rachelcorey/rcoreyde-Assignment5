@@ -57,6 +57,7 @@ public class Main {
         Thread.sleep(2000);
         System.out.println("Thanks for waiting....!");
         System.out.println("Your bot is ready to go!");
+        System.out.println("We named them after you! <3");
         Thread.sleep(2000);
         scanner.close();
         String classChoiceString = "";
