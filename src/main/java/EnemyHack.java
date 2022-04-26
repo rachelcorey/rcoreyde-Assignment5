@@ -9,4 +9,10 @@ public class EnemyHack extends Hack {
         this.numberOfTurnsToCast = 2;
         this.statusEffect = new HackStatus(damageModifier + damageAmt, 2);
     }
+
+    @Override
+    public AttackResult useSkill(String nameOfUser) {
+        return new AttackResult( nameOfUser + "'s Hack did " + damageAmt + " damage and applied the Hack effect!",
+                damageAmt, resourceCost, this.statusEffect);
+    }
 }

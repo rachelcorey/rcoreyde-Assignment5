@@ -152,11 +152,23 @@ public abstract class Player {
         return false;
     }
 
+    public void setCurrentHP(int currentHP) {
+        this.currentHP = currentHP;
+    }
+
     public int getLevel() {
         return level;
     }
 
     public void addResource(int resource) {
         this.resource.increaseCurrentAmount(resource);
+    }
+
+    public void increaseSpeed(int amt) {
+        this.speed += amt;
+    }
+
+    public void emptyInventory() {
+        this.inventory.clear();
     }
 }

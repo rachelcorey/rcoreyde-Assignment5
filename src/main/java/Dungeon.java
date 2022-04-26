@@ -34,4 +34,8 @@ public class Dungeon {
     public int getNumber() {
         return number;
     }
+
+    public void setCurrentFloor(int floorNum) {
+        this.currentFloor = floors.get(floorNum);
+    }
 }

@@ -17,4 +17,9 @@ public class SaltSpray extends Skill {
         this.statusEffect = new Rust(damageModifier + damageAmt, 100);
     }
 
+    @Override
+    public AttackResult useSkill(String nameOfUser) {
+        return new AttackResult( nameOfUser + "'s Salt Spray did " + damageAmt + " damage and applied the Rust effect for the rest of the battle!",
+                damageAmt, resourceCost, this.statusEffect);
+    }
 }

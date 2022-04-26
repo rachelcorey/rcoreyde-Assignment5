@@ -7,7 +7,7 @@ public class PowerConduit extends Item {
         this.name = "Power Conduit";
         this.description = "A conduit crackling with power that grants your bot extra Resource and Attack Power" +
                 " for " + this.duration + " turns.";
-        this.amtOfEffect = 10 * level;
+        this.amtOfEffect = 10 * (level + 1);
     }
 
     @Override
@@ -17,13 +17,13 @@ public class PowerConduit extends Item {
 
     @Override
     public void use(Player player) {
-        System.out.println("Your bot has gained " + this.amtOfEffect + " Attack Power and " + this.amtOfEffect + " Resource from" +
+        System.out.println("Your bot has gained " + this.amtOfEffect + " Attack Power, " + this.amtOfEffect + " Speed, and " + this.amtOfEffect + " Resource from" +
                 " the Power Conduit this turn!");
-        if (this.getTurnsUsedSoFar() == 0) {
-            player.increaseResource(amtOfEffect);
-            player.increaseAtkPower(amtOfEffect);
-            player.setCurrentItemBuff(this);
-        } else {
+        player.increaseResource(amtOfEffect);
+        player.increaseAtkPower(amtOfEffect);
+        player.increaseSpeed(amtOfEffect);
+        player.setCurrentItemBuff(this);
+        if (this.getTurnsUsedSoFar() > 0) {
             this.incrementTurnsUsedSoFar();
         }
     }

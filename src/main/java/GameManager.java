@@ -3,12 +3,15 @@ package main.java;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static java.lang.System.exit;
+
 public class GameManager {
 
     Player player;
     boolean testMode;
     boolean isHumanPlayerGame;
     boolean isGameActive;
+    boolean playerJustLost;
     int totalDungeons;
     int floorsPerDungeon;
     Enemy currentEnemy;
@@ -47,105 +50,168 @@ public class GameManager {
     }
 
     public void conductHumanPlayerGame() {
+        // Game loop
         while (isGameActive) {
-            if ((currentDungeon.getCurrentFloor().getNumber() == floorsPerDungeon) &&
-                    (currentDungeon.getNumber() == totalDungeons)) {
+            if ((currentDungeon.getCurrentFloor().getNumber() == floorsPerDungeon + 1) &&
+                    (currentDungeon.getNumber() == totalDungeons + 1)) {
                 isGameActive = false;
                 System.out.println("You have completed the game!");
+                break;
             }
 
             currentEnemy = currentDungeon.getCurrentFloor().getEnemy();
             System.out.println("You are in dungeon " + currentDungeon.getNumber() + " on Floor " +
                     "number " + currentDungeon.getCurrentFloor().getNumber() + "!");
             System.out.println("");
-            boolean isBattleOver = false;
 
             System.out.println("You are now facing " + currentEnemy.getName() + "!");
-            while (!isBattleOver) {
-                AttackResult curResult = null;
+            // Battle loop
+            while (true) {
                 printCurrentStatsOfBattle();
-                if (player.getCurrentStatusEffect() != null) {
-                    System.out.println("You are under the effects of " + player.getCurrentStatusEffect().getName() + "!");
-                    System.out.println("You take " + player.getCurrentStatusEffect().getPower() + " damage!");
-                    player.takeDamage(player.getCurrentStatusEffect().getPower());
-                }
-                if (currentEnemy.getCurrentStatusEffect() != null) {
-                    System.out.println("Enemy is under the effects of " + currentEnemy.getCurrentStatusEffect().getName() + "!");
-                    System.out.println("Enemy takes " + currentEnemy.getCurrentStatusEffect().getPower() + " damage!");
-                    currentEnemy.takeDamage(currentEnemy.getCurrentStatusEffect().getPower());
-                }
+                printCurrentStatusEffects();
+                printCurrentBuffEffects();
 
-                if (player.getCurrentItemBuff() != null) {
-                    if (player.getCurrentItemBuff().turnsUsedSoFar == player.getCurrentItemBuff().getDuration()) {
-                        System.out.println("Your " + player.getCurrentItemBuff().getName() + " has worn off....");
-                        player.setCurrentItemBuff(null);
-                    } else {
-                        System.out.println("You are under the effects of " + player.getCurrentItemBuff().getName() + "!");
-                        player.getCurrentItemBuff().use(player);
-                    }
+                if (checkIfBattleOver()) {
+                    break;
                 }
 
                 if (player.getSpeed() >= currentEnemy.getSpeed()) {
                     System.out.println("You go first!");
-                    curResult = displayTurnMenu();
-                    handleResult(curResult, true);
-                    System.out.println("");
-                    printCurrentStatsOfBattle();
-                    System.out.println("");
-                    System.out.println("It's the enemy's turn now!");
-                    curResult = currentEnemy.takeTurn();
-                    handleResult(curResult, false);
-                } else {
-                    System.out.println("The enemy goes first!");
-                    curResult = currentEnemy.takeTurn();
-                    handleResult(curResult, false);
-                    System.out.println("");
-                    printCurrentStatsOfBattle();
-                    System.out.println("");
-                    curResult = displayTurnMenu();
-                    handleResult(curResult, true);
-                }
-                if (currentEnemy.getCurrentHP() <= 0) {
-                    isBattleOver = true;
-                    System.out.println("You have defeated " + currentEnemy.getName() + "!");
-                    System.out.println("");
-                    System.out.println("You gained " + currentEnemy.getExpAwarded() + " experience!");
-                    boolean didLevel = player.addExp(currentEnemy.getExpAwarded());
-                    if (didLevel) {
-                        System.out.println("You have leveled up!");
-                    }
-                    if (currentEnemy.getLoot().size() > 0) {
-                        System.out.println("The enemy dropped the following items:");
-                        for (Item item : currentEnemy.getLoot()) {
-                            System.out.println(item.getName());
-                            player.getInventory().add(item);
-                        }
-                        System.out.println("The loot was added to your inventory!");
+                    handleTurn(true);
+                    if (checkIfBattleOver()) {
+                        break;
                     } else {
-                        System.out.println("The enemy didn't drop any loot.... :( ");
-                        System.out.println("");
+                        handleTurn(false);
+                    }
+                } else {
+                    System.out.println("Enemy goes first!");
+                    handleTurn(false);
+                    if (checkIfBattleOver()) {
+                        break;
+                    } else {
+                        handleTurn(true);
                     }
                 }
-                if (player.getCurrentHP() <= 0) {
-                    isBattleOver = true;
-                    System.out.println("You have died!");
-                    System.out.println("Going back to the beginning of the dungeon.....");
-                    // TODO: write this
-                }
-            }
 
-            if (currentDungeon.getCurrentFloor().getNumber() == floorsPerDungeon) {
-                System.out.println("You have completed the dungeon!");
-                System.out.println("You carefully journey to the next dungeon....");
-                worldMap.remove(0);
-                currentDungeon = worldMap.get(0);
+            }
+            if (!playerJustLost) {
+                printFloorNavigation();
             } else {
-                System.out.println("You carefully ascend to the next floor...........");
-                System.out.println("...........");
-                System.out.println("");
-                currentDungeon.ascendToNextFloor();
+                playerJustLost = false;
             }
         }
+        System.out.println("Final stats:");
+        printPlayerStats();
+        System.out.println("");
+        System.out.println("Thanks for playing!");
+        exit(0);
+    }
+
+    private void printFloorNavigation() {
+        if (currentDungeon.getCurrentFloor().getNumber() == floorsPerDungeon) {
+            System.out.println("You have completed the dungeon!");
+            System.out.println("You carefully journey to the next dungeon....");
+            worldMap.remove(0);
+            currentDungeon = worldMap.get(0);
+        } else {
+            System.out.println("You carefully ascend to the next floor...........");
+            System.out.println("...........");
+            System.out.println("");
+            currentDungeon.ascendToNextFloor();
+        }
+    }
+
+    private void printCurrentStatusEffects() {
+        if (player.getCurrentStatusEffect() != null) {
+            if (player.getCurrentStatusEffect().getTurnsElapsed() == player.getCurrentStatusEffect().getNumOfTurns()) {
+                System.out.println("The status effect " + player.getCurrentStatusEffect().getName() + " wore off....");
+                player.setCurrentStatusEffect(null);
+            } else {
+                System.out.println("You are under the effects of " + player.getCurrentStatusEffect().getName() + "!:");
+                System.out.println(player.getCurrentStatusEffect().getDescription());
+                System.out.println("You take " + player.getCurrentStatusEffect().getPower() + " damage!");
+                player.getCurrentStatusEffect().applyEffect(player);
+            }
+        }
+        if (currentEnemy.getCurrentStatusEffect() != null) {
+            if (currentEnemy.getCurrentStatusEffect().getTurnsElapsed() == currentEnemy.getCurrentStatusEffect().getNumOfTurns()) {
+                System.out.println("The status effect " + currentEnemy.getCurrentStatusEffect().getName() + " wore off on " +
+                        currentEnemy.getName() + "....");
+                currentEnemy.setCurrentStatusEffect(null);
+            } else {
+                System.out.println("Enemy is under the effects of " + currentEnemy.getCurrentStatusEffect().getName() + "!:");
+                System.out.println(currentEnemy.getCurrentStatusEffect().getDescription());
+                System.out.println("Enemy takes " + currentEnemy.getCurrentStatusEffect().getPower() + " damage!");
+                currentEnemy.getCurrentStatusEffect().applyEffect(currentEnemy);
+            }
+        }
+    }
+
+    private void printCurrentBuffEffects() {
+        if (player.getCurrentItemBuff() != null) {
+            if (player.getCurrentItemBuff().turnsUsedSoFar == player.getCurrentItemBuff().getDuration() + 1) {
+                System.out.println("Your " + player.getCurrentItemBuff().getName() + " has worn off....");
+                player.setCurrentItemBuff(null);
+            } else {
+                System.out.println("You are under the effects of " + player.getCurrentItemBuff().getName() + "!");
+                player.getCurrentItemBuff().use(player);
+            }
+        }
+    }
+
+    private void handleTurn(boolean isPlayerTurn) {
+        AttackResult curResult = null;
+        if (isPlayerTurn) {
+            System.out.println("It's your turn now!");
+            curResult = displayTurnMenu();
+            handleResult(curResult, true);
+        } else {
+            System.out.println("It's the enemy's turn now!");
+            curResult = currentEnemy.takeTurn();
+            handleResult(curResult, false);
+        }
+    }
+
+    private boolean checkIfBattleOver() {
+        boolean isBattleOver = false;
+        if (currentEnemy.getCurrentHP() <= 0 || player.getCurrentHP() <= 0) {
+            if (currentEnemy.getCurrentHP() <= 0) {
+                isBattleOver = true;
+                player.setCurrentStatusEffect(null);
+                System.out.println("You have defeated " + currentEnemy.getName() + "!");
+                System.out.println("");
+                System.out.println("You gained " + currentEnemy.getExpAwarded() + " experience!");
+                boolean didLevel = player.addExp(currentEnemy.getExpAwarded());
+                if (didLevel) {
+                    System.out.println("You have leveled up!");
+                }
+                if (currentEnemy.getLoot().size() > 0) {
+                    System.out.println("The enemy dropped the following items:");
+                    for (Item item : currentEnemy.getLoot()) {
+                        System.out.println(item.getName());
+                        player.getInventory().add(item);
+                    }
+                    System.out.println("The loot was added to your inventory!");
+                } else {
+                    System.out.println("The enemy didn't drop any loot.... :( ");
+                    System.out.println("");
+                }
+            }
+            if (player.getCurrentHP() <= 0) {
+                isBattleOver = true;
+                System.out.println("You have died!");
+                System.out.println("You have lost all your items!");
+                System.out.println("Going back to the beginning of the dungeon.....");
+                processPlayerLoss();
+            }
+        }
+        return isBattleOver;
+    }
+
+    private void processPlayerLoss() {
+        playerJustLost = true;
+        player.emptyInventory();
+        currentDungeon.setCurrentFloor(0);
     }
 
     private void printCurrentStatsOfBattle() {
@@ -188,7 +254,6 @@ public class GameManager {
         boolean isValidInput = false;
 
         while (!isValidInput) {
-            System.out.println("It's your turn!");
             System.out.println("What would you like to do?");
             System.out.println("1. Attack");
             if (player.getInventory().size() > 0) {
