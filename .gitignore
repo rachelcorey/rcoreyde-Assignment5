@@ -2,8 +2,9 @@
 /.DS_Store
 .gradle
 .build
-.git
+/build
 /.build
+.git
 gradlew
 gradlew.bat
 /gradle
