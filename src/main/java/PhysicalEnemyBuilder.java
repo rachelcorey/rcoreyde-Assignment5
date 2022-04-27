@@ -3,6 +3,10 @@ package main.java;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * PhysicalEnemyBuilder is a class that builds PhysicalEnemy objects.
+ * This satisfies the Builder Design Pattern.
+ */
 public class PhysicalEnemyBuilder implements EnemyBuilder {
 
     Enemy enemy;

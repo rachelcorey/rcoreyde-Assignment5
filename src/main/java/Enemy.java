@@ -20,6 +20,12 @@ public class Enemy implements EnemyPlan {
     ArrayList<Item> inventory;
     ArrayList<Item> loot;
 
+    /**
+     * This method is used to set the enemy's stats based on their power level assigned
+     * by the Floor class.
+     * It satisfies Requirement #7
+     * @param powerLevel the power level of the enemy
+     */
     @Override
     public void setPowerLevel(int powerLevel) {
         this.powerLevel = PowerLevel.values()[powerLevel];
@@ -69,6 +75,7 @@ public class Enemy implements EnemyPlan {
         this.loot = loot;
     }
 
+    // This satisfies Requirement #2
     public AttackResult takeTurn() {
         Random rand = new Random();
         AttackResult result = null;
@@ -76,6 +83,7 @@ public class Enemy implements EnemyPlan {
         if (randomNum == 1) {
             result = attack();
         } else {
+            // This satisfies Requirement #8
             if (inventory.size() > 0 && this.getCurrentHP() < this.getMaxHP()) {
                 System.out.println(name + " is using a " + inventory.get(0).getName() + "!: " + inventory.get(0).getDescription());
                 useItem(inventory.get(0));

@@ -3,6 +3,10 @@ package main.java;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * This class is used to build a MagicEnemy.
+ * This satisfies the Builder Design Pattern.
+ */
 public class MagicEnemyBuilder implements EnemyBuilder {
 
     Enemy enemy;

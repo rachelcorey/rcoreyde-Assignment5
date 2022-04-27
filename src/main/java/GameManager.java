@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * The GameManager class is responsible for managing the game.
+ * This satisfies the Singleton Design Pattern.
+ */
 public class GameManager {
 
     private static GameManager INSTANCE;
@@ -70,6 +74,7 @@ public class GameManager {
                     break;
                 }
 
+                // This satisfies Requirement #2
                 if (player.getSpeed() >= currentEnemy.getSpeed()) {
                     System.out.println("You go first!");
                     handleTurn(true);
@@ -95,6 +100,7 @@ public class GameManager {
                     System.out.println("You have completed the game!");
                     break;
                 }
+                // This satisfies Requirement #1
                 if (player.getCurrentHP() <= (player.getTotalHP() * 0.15)) {
                     processPlayerFifteenPercentHP();
                 } else {
@@ -201,6 +207,7 @@ public class GameManager {
                     System.out.println("");
                 }
             }
+            // This satisfies Requirement #2
             if (player.getCurrentHP() <= 0) {
                 isBattleOver = true;
                 System.out.println("You have died!");
@@ -212,6 +219,7 @@ public class GameManager {
         return isBattleOver;
     }
 
+    // This satisfies Requirement #1
     private void processPlayerFifteenPercentHP() {
         System.out.println("");
         System.out.println("Your HP is less than or equal to 15% of your total HP!");
@@ -225,6 +233,7 @@ public class GameManager {
         currentDungeon.getCurrentFloor().regenerateEnemy();
     }
 
+    // This satisfies Requirement #2
     private void processPlayerLoss() {
         playerJustLost = true;
         player.emptyInventory();
@@ -295,6 +304,7 @@ public class GameManager {
         if (!player.isCasting()) {
             while (!isValidInput) {
                 int validOptions = 1;
+                // This satisfies Requirement #2
                 System.out.println("What would you like to do?");
                 System.out.println("1. Attack");
                 if (player.getInventory().size() > 0) {

@@ -17,6 +17,7 @@ public class RepairKit extends Item {
 
     @Override
     public void use(Player player) {
+        // This satisfies Requirement #8
         if (player.getCurrentHP() >= player.getTotalHP()) {
             System.out.println("You are already at full health! Cannot use Repair Kit!");
         } else {

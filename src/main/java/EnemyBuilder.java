@@ -1,5 +1,9 @@
 package main.java;
 
+/**
+ * EnemyBuilder is a class that builds enemies.
+ * This satisfies the Builder Design Pattern.
+ */
 public interface EnemyBuilder {
 
     public Enemy getEnemy();

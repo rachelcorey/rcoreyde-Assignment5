@@ -2,11 +2,11 @@ package main.java;
 
 public class RoboGolem extends Player {
 
+    // This satisfies Requirement #4
     public RoboGolem(String name, PlayerType playerType) {
         super(name, playerType);
         this.speed -= 5;
-        // Assign unique skills for player class
-        // Pass the power modifier to the skill based on strength
+        // This satisfies Requirement #5
         this.resource = new Steam();
         this.specialSkill = new Skill[2];
         specialSkill[0] = new HeavyBlow(this.atkPower);

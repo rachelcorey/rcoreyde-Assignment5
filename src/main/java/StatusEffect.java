@@ -1,5 +1,10 @@
 package main.java;
 
+/**
+ * StatusEffect is an abstract class that represents a status effect that can be applied to a unit.
+ * It has several child classes: HackStatus, Rust, and ChargedUp
+ * This satisfies Requirement #9
+ */
 public abstract class StatusEffect {
     String name;
     String description;

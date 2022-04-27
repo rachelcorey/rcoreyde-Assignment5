@@ -8,6 +8,7 @@ public class NanoBots extends Player {
     int baseNumOfBots;
     int maxHPperBot;
 
+    // This satisfies Requirement #3
     public NanoBots(String name, PlayerType playerType) {
         super(name, playerType);
         this.baseNumOfBots = 3;
@@ -19,8 +20,7 @@ public class NanoBots extends Player {
         this.currentHP = baseNumOfBots * maxHPperBot;
         this.totalHP = baseNumOfBots * maxHPperBot;
         this.atkPower = 3;
-        // Assign unique skills for player class
-        // Pass the power modifier to the skill based on strength
+        // This satisfies Requirement #5
         this.resource = new MagneticCohesion();
         this.specialSkill = new Skill[2];
         specialSkill[0] = new BuildOneBot(this.atkPower);

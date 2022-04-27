@@ -21,6 +21,7 @@ public abstract class Player {
     Item currentItemBuff;
     boolean isCasting;
 
+    // This satisfies Requirement #5
     public Player(String name, PlayerType playerType) {
         this.name = name;
         this.type = playerType;
@@ -38,6 +39,7 @@ public abstract class Player {
         this.physicalAttack = new BasicPhysical(atkPower / 2);
     }
 
+    // This satisfies Requirement #4
     public void implementPlayerType(PlayerType playerType) {
         if (playerType.equals(PlayerType.HOVERBOT)) {
             this.speed = 20;

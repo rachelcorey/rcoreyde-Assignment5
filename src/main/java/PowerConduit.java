@@ -19,6 +19,7 @@ public class PowerConduit extends Item {
     public void use(Player player) {
         System.out.println("Your bot has gained " + this.amtOfEffect + " Attack Power, " + this.amtOfEffect + " Speed, and " + this.amtOfEffect + " Resource from"
                 + " the Power Conduit this turn!");
+        player.setCurrentStatusEffect(new ChargedUp(this.duration, this.amtOfEffect));
         player.increaseResource(amtOfEffect);
         player.increaseAtkPower(amtOfEffect);
         player.increaseSpeed(amtOfEffect);

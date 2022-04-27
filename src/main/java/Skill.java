@@ -19,6 +19,7 @@ public abstract class Skill {
         this.damageAmt = (damageAmt + (damageAmt * powerModifier));
     }
 
+    // This satisfies Requirement #5
     public AttackResult useSkill(String nameOfUser) {
         Random rand1 = new Random();
         Random rand2 = new Random();

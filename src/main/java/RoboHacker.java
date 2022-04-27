@@ -2,13 +2,12 @@ package main.java;
 
 public class RoboHacker extends Player {
 
-
+    // This satisfies Requirement #3
     public RoboHacker(String name, PlayerType playerType) {
         super(name, playerType);
         this.currentHP = 20;
         this.totalHP = 20;
-        // Assign unique skills for player class
-        // Pass the power modifier to the skill based on strength
+        // This satisfies Requirement #5
         this.resource = new QuantumIons();
         this.specialSkill = new Skill[2];
         specialSkill[0] = new FastHack(this.atkPower);

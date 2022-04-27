@@ -9,6 +9,12 @@ public class Floor {
         enemy = generateEnemy();
     }
 
+    /**
+     * This method generates a random enemy for the floor, and assigns its power based
+     * on the floor number.
+     * This satisfies Requirements #6 and #7.
+     * @return Enemy for the current floor based on the floor number.
+     */
     private Enemy generateEnemy() {
         Enemy enemy;
         if (number % 10 == 0) {

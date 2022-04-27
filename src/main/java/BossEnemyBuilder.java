@@ -3,6 +3,10 @@ package main.java;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * This class is used to build the boss enemy.
+ * It satisfies the Builder Design Pattern.
+ */
 public class BossEnemyBuilder implements EnemyBuilder {
 
     Enemy enemy;
