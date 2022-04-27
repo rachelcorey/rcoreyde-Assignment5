@@ -10,7 +10,7 @@ public class GameManager {
 
     private static GameManager INSTANCE;
     Player player;
-    boolean testMode;
+    String playerClass;
     boolean isHumanPlayerGame;
     boolean isGameActive;
     boolean playerJustLost;
@@ -21,25 +21,15 @@ public class GameManager {
     Dungeon currentDungeon;
     ArrayList<Dungeon> worldMap;
 
-    public GameManager(String playerName, String playerClass, PlayerType playerType, boolean testMode, boolean isHumanPlayerGame) {
+    public GameManager(String playerName, String playerClass, PlayerType playerType, boolean isHumanPlayerGame) {
         INSTANCE = this;
         player = PlayerFactory.createPlayer(playerName, playerClass, playerType);
-        this.testMode = testMode;
+        this.playerClass = playerClass;
         this.isHumanPlayerGame = isHumanPlayerGame;
-        if (testMode) {
-            totalDungeons = 5;
-            floorsPerDungeon = 10;
-        } else {
-            totalDungeons = 5;
-            floorsPerDungeon = 10;
-        }
+        totalDungeons = 5;
+        floorsPerDungeon = 10;
         this.worldMap = generateWorldMap();
         currentDungeon = worldMap.get(0);
-        currentDungeon.setCurrentFloor(5);
-        player.levelUp();
-        player.levelUp();
-        player.levelUp();
-        player.levelUp();
         isGameActive = true;
         printPlayerStats();
         conductHumanPlayerGame();
@@ -230,6 +220,7 @@ public class GameManager {
     }
 
     private void printPlayerStats() {
+        System.out.println("~*~*~*~*~*~*~ " + player.getName() + ", the " + playerClass + " " + player.getType() + " ~*~*~*~*~*~*~");
         if (player instanceof NanoBots) {
             System.out.println("Current number of NanoBots: " + ((NanoBots) player).getNumOfBots());
         }

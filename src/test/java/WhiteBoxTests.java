@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 public class WhiteBoxTests {
 
     Player player;
+    GameManager gameManager;
 
     @Before
     public void setUp() {
@@ -17,6 +18,7 @@ public class WhiteBoxTests {
         String playerClass = "ROBOGOLEM";
         PlayerType playerType = PlayerType.TUNGSTENBOT;
         player = PlayerFactory.createPlayer(playerName, playerClass, playerType);
+        gameManager = new GameManager(playerName, playerClass, playerType, false);
     }
 
     @Test

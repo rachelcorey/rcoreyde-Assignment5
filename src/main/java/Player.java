@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public abstract class Player {
 
     String name;
+    PlayerType type;
     int level;
     int currentHP;
     int totalHP;
@@ -22,6 +23,7 @@ public abstract class Player {
 
     public Player(String name, PlayerType playerType) {
         this.name = name;
+        this.type = playerType;
         this.currentHP = 20;
         this.totalHP = 20;
         this.speed = 10;
@@ -189,4 +191,8 @@ public abstract class Player {
     }
 
     public abstract void resetSpells();
+
+    public PlayerType getType() {
+        return type;
+    }
 }

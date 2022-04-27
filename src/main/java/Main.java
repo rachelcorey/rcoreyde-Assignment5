@@ -18,16 +18,15 @@ public class Main {
         System.out.println("                              \\ \\_\\                            \\ \\_\\                                /\\____/                             ");
         System.out.println("                               \\/_/                             \\/_/                                \\_/__/                              ");
         System.out.println("Welcome to ZeepZorp Dungeons!");
-        System.out.println("Would you like to enter testing mode?");
+        System.out.println("Would you like to enter autoplay mode?");
         System.out.println("1. Yes");
         System.out.println("2. No");
         int choice = scanner.nextInt();
         if (choice == 1) {
-            createGameManager("RobotEnthusiast", "NANOBOTS", PlayerType.RADIOACTIVEBOT, true);
+            createGameManager("Klapaucius", "ROBOGOLEM", PlayerType.RADIOACTIVEBOT, false);
         } else {
             showDialogAndStartGame();
         }
-        scanner.close();
     }
 
     private static void showDialogAndStartGame() throws InterruptedException {
@@ -50,16 +49,16 @@ public class Main {
         System.out.println("That's a great choice!");
         System.out.println("We're ready to build your bot!");
         System.out.println("Just a moment......");
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         System.out.println("*loud clanking*");
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         System.out.println("*BEEP BLOOP BLEEEEEEEEEEEEEEEEEEE*");
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         System.out.println("Thanks for waiting....!");
         System.out.println("Your bot is ready to go!");
         System.out.println("We named them after you! <3");
-        Thread.sleep(2000);
-        scanner.close();
+        System.out.println("");
+        Thread.sleep(1000);
         String classChoiceString = "";
         PlayerType moduleChoiceEnum = null;
         switch (classChoice) {
@@ -87,12 +86,12 @@ public class Main {
                 moduleChoiceEnum = PlayerType.RADIOACTIVEBOT;
                 break;
         }
-        createGameManager(name, classChoiceString, moduleChoiceEnum, false);
+        createGameManager(name, classChoiceString, moduleChoiceEnum, true);
     }
 
-    private static void createGameManager(String playerName, String playerClass, PlayerType playerType, boolean testMode) {
+    private static void createGameManager(String playerName, String playerClass, PlayerType playerType, boolean isHumanPlayerGame) {
         if (gameManager == null) {
-            gameManager = new GameManager(playerName, playerClass, playerType, testMode, false);
+            gameManager = new GameManager(playerName, playerClass, playerType, isHumanPlayerGame);
         }
     }
 }
