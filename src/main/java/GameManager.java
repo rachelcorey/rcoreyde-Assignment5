@@ -1,6 +1,7 @@
 package main.java;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
@@ -26,7 +27,7 @@ public class GameManager {
         this.testMode = testMode;
         this.isHumanPlayerGame = isHumanPlayerGame;
         if (testMode) {
-            totalDungeons = 1;
+            totalDungeons = 5;
             floorsPerDungeon = 10;
         } else {
             totalDungeons = 5;
@@ -39,8 +40,6 @@ public class GameManager {
         player.levelUp();
         player.levelUp();
         player.levelUp();
-        player.getInventory().add(new GrapplingClaw(2));
-        player.getInventory().add(new GrapplingClaw(8));
         isGameActive = true;
         printPlayerStats();
         conductHumanPlayerGame();
@@ -261,24 +260,43 @@ public class GameManager {
         }
     }
 
-    public AttackResult displayTurnMenu() {
+    private int generateRandomChoice(int max) {
+        Random rand = new Random();
+        return rand.nextInt(max + 1);
+    }
+
+    private int generateChoice(int validOptions) {
         Scanner scanner = new Scanner(System.in);
+        int choice = 0;
+        if (isHumanPlayerGame) {
+            choice = scanner.nextInt();
+        } else {
+            choice = generateRandomChoice(validOptions);
+        }
+        return choice;
+    }
+
+    public AttackResult displayTurnMenu() {
+        int choice = 0;
         AttackResult result = null;
         boolean isValidInput = false;
 
         if (!player.isCasting()) {
             while (!isValidInput) {
+                int validOptions = 1;
                 System.out.println("What would you like to do?");
                 System.out.println("1. Attack");
                 if (player.getInventory().size() > 0) {
                     System.out.println("2. Use Item");
+                    validOptions = 2;
                 }
-                int choice = scanner.nextInt();
+                choice = generateChoice(validOptions);
                 if (choice == 1) {
                     System.out.println("What attack would you like to use?");
                     System.out.println("1. Basic Attack");
                     System.out.println("2. Special Attack");
-                    choice = scanner.nextInt();
+                    validOptions = 2;
+                    choice = generateChoice(validOptions);
                     if (choice == 1) {
                         result = player.physicalAttack();
                         isValidInput = true;
@@ -286,20 +304,24 @@ public class GameManager {
                         System.out.println("Which special attack would you like to use?");
                         System.out.println("1. " + player.specialSkill[0].getName() + ": " + player.specialSkill[0].getDescription() + " | Cost: " + player.specialSkill[0].getCost());
                         System.out.println("2. " + player.specialSkill[1].getName() + ": " + player.specialSkill[1].getDescription() + " | Cost: " + player.specialSkill[1].getCost());
-                        choice = scanner.nextInt();
-                        if (choice == 1) {
-                            if (player.specialSkill[0].getCost() <= player.resource.getCurrentAmount()) {
-                                result = player.specialAttack(0);
-                                isValidInput = true;
-                            } else {
-                                System.out.println("You do not have enough resource to use this special attack!");
-                            }
+                        choice = generateChoice(validOptions);
+                        if (player instanceof NanoBots && ((NanoBots) player).getNumOfBots() >= 50) {
+                            System.out.println("You have too many bots to use this skill!");
                         } else {
-                            if (player.specialSkill[1].getCost() <= player.resource.getCurrentAmount()) {
-                                result = player.specialAttack(1);
-                                isValidInput = true;
+                            if (choice == 1) {
+                                if (player.specialSkill[0].getCost() <= player.resource.getCurrentAmount()) {
+                                    result = player.specialAttack(0);
+                                    isValidInput = true;
+                                } else {
+                                    System.out.println("You do not have enough resource to use this special attack!");
+                                }
                             } else {
-                                System.out.println("You do not have enough resource to use this special attack!");
+                                if (player.specialSkill[1].getCost() <= player.resource.getCurrentAmount()) {
+                                    result = player.specialAttack(1);
+                                    isValidInput = true;
+                                } else {
+                                    System.out.println("You do not have enough resource to use this special attack!");
+                                }
                             }
                         }
                     }
@@ -310,7 +332,11 @@ public class GameManager {
                         System.out.println(count + ". " + item.getName());
                         count++;
                     }
-                    choice = scanner.nextInt();
+                    validOptions = count - 1;
+                    choice = generateChoice(validOptions);
+                    if (choice <= 0 || choice >= player.getInventory().size()) {
+                        choice = 1;
+                    }
                     player.useItem(player.getInventory().get(choice - 1));
                     player.getInventory().remove(player.getInventory().get(choice - 1));
                     result = new AttackResult("", 0,0,  null);

@@ -92,7 +92,7 @@ public class Main {
 
     private static void createGameManager(String playerName, String playerClass, PlayerType playerType, boolean testMode) {
         if (gameManager == null) {
-            gameManager = new GameManager(playerName, playerClass, playerType, testMode, true);
+            gameManager = new GameManager(playerName, playerClass, playerType, testMode, false);
         }
     }
 }

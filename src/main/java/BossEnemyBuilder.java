@@ -31,7 +31,7 @@ public class BossEnemyBuilder implements EnemyBuilder {
             enemy.setSkill(new SaltSpray(enemy.getAtkPower()));
         } else if (skill == 2) {
             enemy.setSkill(new EnemyHack(enemy.getAtkPower()));
-        } else if (skill == 3) {
+        } else {
             enemy.setSkill(new HeavyBlow(enemy.getAtkPower()));
         }
     }

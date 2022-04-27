@@ -20,11 +20,8 @@ public class SlowHack extends Hack {
         if (castingTurnsElapsed == numberOfTurnsToCast) {
             castingTurnsElapsed = 0;
             GameManager.getInstance().getPlayer().setCasting(false);
-            NanoBots player = (NanoBots) GameManager.getInstance().getPlayer();
-            player.addOneBotEach();
-            return new AttackResult( nameOfUser + "'s Bots each built one bot each! " + nameOfUser + " now has " + (player.getBaseNumOfBots() + 1) + " bots!",
-                    0, resourceCost, this.statusEffect);
-
+            return new AttackResult( nameOfUser + "'s Hack did " + damageAmt + " damage and applied the Hack effect!",
+                    damageAmt, 0, this.statusEffect);
         } else {
             int cost = 0;
             if (castingTurnsElapsed == 0) {
