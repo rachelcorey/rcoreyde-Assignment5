@@ -16,7 +16,9 @@ public class UpgradeModule extends Item {
 
     @Override
     public void use(Player player) {
-        // TODO: implement
+        for (int i = 0; i < amtOfEffect; i++) {
+           player.levelUp();
+        }
         System.out.println("You have upgraded your bot by " + amtOfEffect + " levels!!!");
     }
 }

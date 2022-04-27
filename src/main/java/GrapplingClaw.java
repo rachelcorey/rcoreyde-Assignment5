@@ -17,7 +17,14 @@ public class GrapplingClaw extends Item {
 
     @Override
     public void use(Player player) {
-        // TODO: implement
-        System.out.println("not implemented yet.");
+        Dungeon currentDungeon = GameManager.getInstance().getCurrentDungeon();
+        int floorToSkipTo = amtOfEffect + currentDungeon.getCurrentFloor().getNumber();
+        if (floorToSkipTo > GameManager.getInstance().getFloorsPerDungeon()) {
+            floorToSkipTo = GameManager.getInstance().getFloorsPerDungeon() - 1;
+        }
+        amtOfEffect = floorToSkipTo - currentDungeon.getCurrentFloor().getNumber();
+        GameManager.getInstance().getCurrentDungeon().setCurrentFloor(floorToSkipTo - 1);
+        GameManager.getInstance().setBattleOver(true);
+        System.out.println("Skipped ahead " + amtOfEffect + " floors, to floor " + floorToSkipTo + "!");
     }
 }

@@ -42,7 +42,7 @@ public class Enemy implements EnemyPlan {
                 break;
             case 2:
                 this.setLevel(3 + floorNum);
-                this.setMaxHP(30 + floorNum);
+                this.setMaxHP(40 + floorNum);
                 this.setSpeed((int) (18 * (Math.floor(floorNum / 2))));
                 this.setAtkPower((int) (8 * (Math.floor(floorNum / 2))));
                 this.setExpAwarded(200 * (1 + floorNum));

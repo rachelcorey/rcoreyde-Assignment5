@@ -69,7 +69,7 @@ public class BossEnemyBuilder implements EnemyBuilder {
         if (itemType == 0) {
             enemy.getLoot().add(new UpgradeModule(itemLevel));
         } else {
-            enemy.getLoot().add(new PowerConduit(itemLevel));
+            enemy.getLoot().add(new GrapplingClaw(itemLevel));
         }
     }
 }

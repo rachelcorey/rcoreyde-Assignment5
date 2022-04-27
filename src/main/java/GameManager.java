@@ -13,6 +13,7 @@ public class GameManager {
     boolean isHumanPlayerGame;
     boolean isGameActive;
     boolean playerJustLost;
+    boolean isBattleOver;
     int totalDungeons;
     int floorsPerDungeon;
     Enemy currentEnemy;
@@ -26,13 +27,20 @@ public class GameManager {
         this.isHumanPlayerGame = isHumanPlayerGame;
         if (testMode) {
             totalDungeons = 1;
-            floorsPerDungeon = 5;
+            floorsPerDungeon = 10;
         } else {
             totalDungeons = 5;
             floorsPerDungeon = 10;
         }
         this.worldMap = generateWorldMap();
         currentDungeon = worldMap.get(0);
+        currentDungeon.setCurrentFloor(5);
+        player.levelUp();
+        player.levelUp();
+        player.levelUp();
+        player.levelUp();
+        player.getInventory().add(new GrapplingClaw(2));
+        player.getInventory().add(new GrapplingClaw(8));
         isGameActive = true;
         printPlayerStats();
         conductHumanPlayerGame();
@@ -44,12 +52,7 @@ public class GameManager {
 
     private ArrayList<Dungeon> generateWorldMap() {
         ArrayList<Dungeon> worldMap = new ArrayList<>();
-        int numOfFloors = 0;
-        if (testMode) {
-            numOfFloors = 5;
-        } else {
-            numOfFloors = 10;
-        }
+        int numOfFloors = floorsPerDungeon;
         for (int i = 0; i < totalDungeons; i++) {
             worldMap.add(new Dungeon(i, numOfFloors));
         }
@@ -59,13 +62,6 @@ public class GameManager {
     public void conductHumanPlayerGame() {
         // Game loop
         while (isGameActive) {
-            if ((currentDungeon.getCurrentFloor().getNumber() == floorsPerDungeon + 1) &&
-                    (currentDungeon.getNumber() == totalDungeons + 1)) {
-                isGameActive = false;
-                System.out.println("You have completed the game!");
-                break;
-            }
-
             currentEnemy = currentDungeon.getCurrentFloor().getEnemy();
             System.out.println("You are in dungeon " + currentDungeon.getNumber() + " on Floor " +
                     "number " + currentDungeon.getCurrentFloor().getNumber() + "!");
@@ -85,7 +81,7 @@ public class GameManager {
                 if (player.getSpeed() >= currentEnemy.getSpeed()) {
                     System.out.println("You go first!");
                     handleTurn(true);
-                    if (checkIfBattleOver()) {
+                    if (isBattleOver || checkIfBattleOver()) {
                         break;
                     } else {
                         handleTurn(false);
@@ -101,6 +97,12 @@ public class GameManager {
                 }
             }
             if (!playerJustLost) {
+                if ((currentDungeon.getCurrentFloor().getNumber() == floorsPerDungeon) &&
+                        (currentDungeon.getNumber() == totalDungeons)) {
+                    isGameActive = false;
+                    System.out.println("You have completed the game!");
+                    break;
+                }
                 printFloorNavigation();
             } else {
                 playerJustLost = false;
@@ -110,7 +112,6 @@ public class GameManager {
         printPlayerStats();
         System.out.println("");
         System.out.println("Thanks for playing!");
-        exit(0);
     }
 
     private void printFloorNavigation() {
@@ -179,7 +180,7 @@ public class GameManager {
     }
 
     private boolean checkIfBattleOver() {
-        boolean isBattleOver = false;
+        isBattleOver = false;
         if (currentEnemy.getCurrentHP() <= 0 || player.getCurrentHP() <= 0) {
             if (currentEnemy.getCurrentHP() <= 0) {
                 isBattleOver = true;
@@ -335,5 +336,17 @@ public class GameManager {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public Dungeon getCurrentDungeon() {
+        return currentDungeon;
+    }
+
+    public int getFloorsPerDungeon() {
+        return floorsPerDungeon;
+    }
+
+    public void setBattleOver(boolean battleOver) {
+        isBattleOver = battleOver;
     }
 }

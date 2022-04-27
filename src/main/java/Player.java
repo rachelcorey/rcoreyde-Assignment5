@@ -128,6 +128,7 @@ public abstract class Player {
         this.specialSkill[1].increaseDamageAmt(5);
     }
 
+
     public void useResource(int resource) {
         this.resource.decreaseCurrentAmount(resource);
     }

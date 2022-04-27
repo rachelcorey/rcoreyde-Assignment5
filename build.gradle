@@ -8,6 +8,10 @@ apply plugin: 'application'
 apply plugin: 'jacoco'
 apply plugin: 'java'
 
+run {
+    standardInput = System.in
+}
+
 test {
 
     exclude '**/BlackBoxGiven.class'
