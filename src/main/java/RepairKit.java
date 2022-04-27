@@ -17,14 +17,18 @@ public class RepairKit extends Item {
 
     @Override
     public void use(Player player) {
-        player.addResource(amtOfEffect);
-        if (player instanceof NanoBots) {
-            NanoBots nanoPlayer = (NanoBots) player;
-            nanoPlayer.addMultipleBots(amtOfEffect);
-            System.out.println(player.getName() + " gained " + amtOfEffect + " additional bots and " + amtOfEffect + " resource!");
+        if (player.getCurrentHP() >= player.getTotalHP()) {
+            System.out.println("You are already at full health! Cannot use Repair Kit!");
         } else {
-            player.addHealth(amtOfEffect);
-            System.out.println(player.getName() + " was healed " + amtOfEffect + " HP and gained " + amtOfEffect + " Resource!");
+            player.addResource(amtOfEffect);
+            if (player instanceof NanoBots) {
+                NanoBots nanoPlayer = (NanoBots) player;
+                nanoPlayer.addMultipleBots(amtOfEffect);
+                System.out.println(player.getName() + " gained " + amtOfEffect + " additional bots and " + amtOfEffect + " resource!");
+            } else {
+                player.addHealth(amtOfEffect);
+                System.out.println(player.getName() + " was healed " + amtOfEffect + " HP and gained " + amtOfEffect + " Resource!");
+            }
         }
     }
 }

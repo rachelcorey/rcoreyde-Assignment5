@@ -363,14 +363,6 @@ public class GameManager {
         return result;
     }
 
-    public void conductComputerPlayerGame() {
-
-    }
-
-    public String showTurnMenu() {
-        return null;
-    }
-
     public Player getPlayer() {
         return player;
     }
