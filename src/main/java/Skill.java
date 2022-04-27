@@ -7,7 +7,6 @@ public abstract class Skill {
     String description;
     int damageAmt;
     int resourceCost;
-    int aoeDmg;
     int hitNumber;
     float percentToMiss;
     int numberOfTurnsToCast;

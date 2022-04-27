@@ -29,29 +29,29 @@ public class Enemy implements EnemyPlan {
             case 0:
                 this.setLevel(1 + floorNum);
                 this.setMaxHP(12 + floorNum);
-                this.setSpeed((int) (10 * 1 + (Math.ceil(floorNum / 2))));
-                this.setAtkPower((int) (3 * 1 + (Math.ceil(floorNum / 2))));
+                this.setSpeed((int) (10 + (Math.ceil((double) floorNum / 2))));
+                this.setAtkPower((int) (3 + (Math.ceil((double) floorNum / 2))));
                 this.setExpAwarded(50 * (1 + floorNum));
                 break;
             case 1:
                 this.setLevel(2 + floorNum);
                 this.setMaxHP(20 + floorNum);
-                this.setSpeed((int) (12 * (Math.floor(floorNum / 2))));
-                this.setAtkPower((int) (10 * (Math.floor(floorNum / 2))));
+                this.setSpeed((int) (12 * (Math.floor((double) floorNum / 2))));
+                this.setAtkPower((int) (10 * (Math.floor((double) floorNum / 2))));
                 this.setExpAwarded(100 * (1 + floorNum));
                 break;
             case 2:
                 this.setLevel(3 + floorNum);
                 this.setMaxHP(40 + floorNum);
-                this.setSpeed((int) (25 * (Math.floor(floorNum / 2))));
-                this.setAtkPower((int) (15 * (Math.floor(floorNum / 2))));
+                this.setSpeed((int) (25 * (Math.floor((double) floorNum / 2))));
+                this.setAtkPower((int) (15 * (Math.floor((double) floorNum / 2))));
                 this.setExpAwarded(200 * (1 + floorNum));
                 break;
             default:
                 break;
         }
         this.setCurrentHP(maxHP);
-        this.physicalSkill = new BasicPhysical(atkPower/2);
+        this.physicalSkill = new BasicPhysical(atkPower / 2);
     }
 
     @Override

@@ -5,11 +5,6 @@ public abstract class Resource {
     String name;
     int currentAmount;
     int totalAmount;
-    int regenAmtPerTurn;
-
-    public void regen(float percentModifier) {
-        currentAmount += (int) (regenAmtPerTurn * percentModifier);
-    }
 
     public void setTotalAmount(int totalAmount) {
         this.totalAmount = totalAmount;

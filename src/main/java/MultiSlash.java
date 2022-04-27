@@ -10,7 +10,6 @@ public class MultiSlash extends Skill {
         this.description = "Slash the enemy up to 5 times in a row for a smaller amount of damage.";
         this.damageAmt = 3;
         this.resourceCost = 5;
-        this.aoeDmg = 0;
         this.hitNumber = hitNumber();
         this.percentToMiss = 0.10f;
         this.numberOfTurnsToCast = 1;
@@ -21,10 +20,10 @@ public class MultiSlash extends Skill {
     public AttackResult useSkill(String nameOfUser) {
         this.hitNumber = hitNumber();
         this.damageAmt *= this.hitNumber;
-        return new AttackResult( name + " hit " + hitNumber + " times and did " + damageAmt + " damage!", damageAmt, resourceCost, null);
+        return new AttackResult(name + " hit " + hitNumber + " times and did " + damageAmt + " damage!", damageAmt, resourceCost, null);
     }
 
-    private int hitNumber(){
+    private int hitNumber() {
         Random rand = new Random();
         return rand.nextInt(5) + 1;
     }

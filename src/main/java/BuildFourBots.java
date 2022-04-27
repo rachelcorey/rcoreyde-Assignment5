@@ -13,7 +13,6 @@ public class BuildFourBots extends BuildOneBot {
         this.numberOfTurnsToCast = 3;
     }
 
-
     @Override
     public AttackResult useSkill(String nameOfUser) {
         System.out.println("number of turns to cast: " + numberOfTurnsToCast);
@@ -23,7 +22,7 @@ public class BuildFourBots extends BuildOneBot {
             GameManager.getInstance().getPlayer().setCasting(false);
             NanoBots player = (NanoBots) GameManager.getInstance().getPlayer();
             player.addFourBotsEach();
-            return new AttackResult( nameOfUser + "'s Bots each built four bots each! " + nameOfUser + " now has " + player.getNumOfBots() + " bots!",
+            return new AttackResult(nameOfUser + "'s Bots each built four bots each! " + nameOfUser + " now has " + player.getNumOfBots() + " bots!",
                     0, 0, this.statusEffect);
         } else {
             int cost = 0;

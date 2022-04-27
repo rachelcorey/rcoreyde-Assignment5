@@ -1,5 +1,6 @@
 package main.java;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -7,9 +8,9 @@ import java.util.Scanner;
 public class GameManager {
 
     private static GameManager INSTANCE;
-    Player player;
-    String playerClass;
-    boolean isHumanPlayerGame;
+    static Player player;
+    static String playerClass;
+    static boolean isHumanPlayerGame;
     boolean isGameActive;
     boolean playerJustLost;
     boolean isBattleOver;
@@ -22,8 +23,8 @@ public class GameManager {
     public GameManager(String playerName, String playerClass, PlayerType playerType, boolean isHumanPlayerGame) {
         INSTANCE = this;
         player = PlayerFactory.createPlayer(playerName, playerClass, playerType);
-        this.playerClass = playerClass;
-        this.isHumanPlayerGame = isHumanPlayerGame;
+        GameManager.playerClass = playerClass;
+        GameManager.isHumanPlayerGame = isHumanPlayerGame;
         totalDungeons = 5;
         floorsPerDungeon = 10;
         this.worldMap = generateWorldMap();
@@ -34,6 +35,9 @@ public class GameManager {
     }
 
     public static GameManager getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new GameManager(player.getName(), playerClass, player.getType(), isHumanPlayerGame);
+        }
         return INSTANCE;
     }
 
@@ -255,7 +259,7 @@ public class GameManager {
     }
 
     private int generateChoice(int validOptions) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
         int choice = 0;
         if (isHumanPlayerGame) {
             choice = scanner.nextInt();

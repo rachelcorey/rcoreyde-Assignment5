@@ -1,13 +1,12 @@
 package main.java;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Main {
 
-    private static GameManager gameManager;
-
     public static void main(String[] args) throws InterruptedException {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
         System.out.println(" ________                         ________                             ____                                                             ");
         System.out.println("/\\_____  \\                       /\\_____  \\                           /\\  _`\\                                                           ");
         System.out.println("\\/____//'/'     __     __   _____\\/____//'/'    ___   _ __   _____    \\ \\ \\/\\ \\  __  __    ___      __      __    ___     ___     ____  ");
@@ -23,14 +22,14 @@ public class Main {
         System.out.println("2. No");
         int choice = scanner.nextInt();
         if (choice == 1) {
-            createGameManager("Klapaucius", "NANOBOTS", PlayerType.RADIOACTIVEBOT, false);
+            new GameManager("Klapaucius", "NANOBOTS", PlayerType.RADIOACTIVEBOT, false);
         } else {
             showDialogAndStartGame();
         }
     }
 
     private static void showDialogAndStartGame() throws InterruptedException {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
         System.out.println("What is your name?: ");
         String name = scanner.nextLine();
         System.out.println("Hello " + name + "! Zorped to meet you!");
@@ -90,12 +89,6 @@ public class Main {
             default:
                 break;
         }
-        createGameManager(name, classChoiceString, moduleChoiceEnum, true);
-    }
-
-    private static void createGameManager(String playerName, String playerClass, PlayerType playerType, boolean isHumanPlayerGame) {
-        if (gameManager == null) {
-            gameManager = new GameManager(playerName, playerClass, playerType, isHumanPlayerGame);
-        }
+        new GameManager(name, classChoiceString, moduleChoiceEnum, true);
     }
 }

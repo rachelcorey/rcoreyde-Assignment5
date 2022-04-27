@@ -13,8 +13,8 @@ public class FastHack extends Hack {
     }
 
     @Override
-    public AttackResult useSkill (String nameOfUser) {
-        return new AttackResult( nameOfUser + "'s Hack did " + damageAmt + " damage and applied the Hack effect!",
+    public AttackResult useSkill(String nameOfUser) {
+        return new AttackResult(nameOfUser + "'s Hack did " + damageAmt + " damage and applied the Hack effect!",
                 damageAmt, resourceCost, this.statusEffect);
     }
 }
