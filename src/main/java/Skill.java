@@ -9,18 +9,25 @@ public abstract class Skill {
     int resourceCost;
     int hitNumber;
     float percentToMiss;
+    float percentToCrit;
     int numberOfTurnsToCast;
     StatusEffect statusEffect;
 
     public Skill(int powerModifier) {
         this.damageAmt = 1;
+        this.percentToCrit = 0.10f;
         this.damageAmt = (damageAmt + (damageAmt * powerModifier));
     }
 
     public AttackResult useSkill(String nameOfUser) {
-        Random rand = new Random();
-        if (rand.nextInt(100) < 100 * percentToMiss) {
+        Random rand1 = new Random();
+        Random rand2 = new Random();
+        if (rand1.nextInt(100) < 100 * percentToMiss) {
             return new AttackResult(nameOfUser + "'s " + name + " missed!", 0, resourceCost, null);
+        }
+        if (rand2.nextInt(100) < 100 * percentToCrit) {
+            return new AttackResult(nameOfUser + "'s " + name + " did a critical strike and dealt double damage for " + damageAmt * 2 + "!",
+                    damageAmt * 2, resourceCost, null);
         }
         return new AttackResult(nameOfUser + "'s " + name + " did " + damageAmt + " damage!", damageAmt, resourceCost, statusEffect);
     }
