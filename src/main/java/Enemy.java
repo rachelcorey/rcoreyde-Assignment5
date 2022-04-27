@@ -33,30 +33,30 @@ public class Enemy implements EnemyPlan {
         // set level, HP, speed, expAwarded, physicalSkill based on powerLevel and floorNum
         switch (powerLevel) {
             case 0:
-                this.setLevel(1 + floorNum);
-                this.setMaxHP(12 + floorNum);
-                this.setSpeed((int) (10 + (Math.ceil((double) floorNum / 2))));
-                this.setAtkPower((int) (3 + (Math.ceil((double) floorNum / 2))));
-                this.setExpAwarded(50 * (1 + floorNum));
+                this.setLevel(floorNum);
+                this.setMaxHP(10 * floorNum);
+                this.setSpeed((int) (10 + (Math.ceil((double) floorNum / 0.5))));
+                this.setAtkPower((int) (8 + (Math.ceil((double) floorNum / 0.5))));
+                this.setExpAwarded(20 * (1 + floorNum));
                 break;
             case 1:
-                this.setLevel(2 + floorNum);
-                this.setMaxHP(20 + floorNum);
-                this.setSpeed((int) (12 * (Math.floor((double) floorNum / 2))));
-                this.setAtkPower((int) (10 * (Math.floor((double) floorNum / 2))));
-                this.setExpAwarded(100 * (1 + floorNum));
+                this.setLevel(2 * floorNum);
+                this.setMaxHP(20 * floorNum);
+                this.setSpeed((int) (15 * (Math.ceil((double) floorNum / 0.5))));
+                this.setAtkPower((int) (15 * (Math.ceil((double) floorNum / 0.5))));
+                this.setExpAwarded(50 * (1 + floorNum));
                 break;
             case 2:
-                this.setLevel(3 + floorNum);
-                this.setMaxHP(40 + floorNum);
-                this.setSpeed((int) (25 * (Math.floor((double) floorNum / 2))));
-                this.setAtkPower((int) (15 * (Math.floor((double) floorNum / 2))));
-                this.setExpAwarded(200 * (1 + floorNum));
+                this.setLevel(3 * floorNum);
+                this.setMaxHP(25 * floorNum);
+                this.setSpeed((int) (20 * (Math.ceil((double) floorNum / 0.5))));
+                this.setAtkPower((int) (20 * (Math.ceil((double) floorNum / 0.5))));
+                this.setExpAwarded(100 * (1 + floorNum));
                 break;
             default:
                 break;
         }
-        this.setCurrentHP(maxHP);
+        this.setCurrentHP(this.getMaxHP());
         this.physicalSkill = new BasicPhysical(atkPower / 2);
     }
 

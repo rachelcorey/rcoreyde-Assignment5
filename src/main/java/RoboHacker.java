@@ -11,9 +11,7 @@ public class RoboHacker extends Player {
         this.resource = new QuantumIons();
         this.specialSkill = new Skill[2];
         specialSkill[0] = new FastHack(this.atkPower);
-        this.specialSkill[0].damageAmt += this.atkPower;
         specialSkill[1] = new SlowHack(this.atkPower + 10);
-        this.specialSkill[1].damageAmt += this.atkPower;
         this.physicalAttack.damageAmt += this.atkPower;
         this.implementPlayerType(playerType);
     }
@@ -21,7 +19,6 @@ public class RoboHacker extends Player {
     @Override
     public void resetSpells() {
         specialSkill[1] = new SlowHack(this.atkPower);
-        this.specialSkill[1].damageAmt += this.atkPower;
     }
 
 }

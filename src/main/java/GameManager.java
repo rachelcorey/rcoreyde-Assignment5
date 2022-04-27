@@ -58,7 +58,10 @@ public class GameManager {
     public void conductHumanPlayerGame() {
         // Game loop
         while (isGameActive) {
+            resetPlayerEffects();
             currentEnemy = currentDungeon.getCurrentFloor().getEnemy();
+            currentEnemy.setCurrentStatusEffect(null);
+            currentEnemy.setCurrentHP(currentEnemy.getMaxHP());
             System.out.println("You are in dungeon " + currentDungeon.getNumber() + " on Floor "
                     + "number " + currentDungeon.getCurrentFloor().getNumber() + "!");
             System.out.println("");
@@ -71,6 +74,7 @@ public class GameManager {
                 printCurrentBuffEffects();
 
                 if (checkIfBattleOver()) {
+                    resetPlayerEffects();
                     break;
                 }
 
@@ -79,20 +83,31 @@ public class GameManager {
                     System.out.println("You go first!");
                     handleTurn(true);
                     if (isBattleOver || checkIfBattleOver()) {
+                        resetPlayerEffects();
                         break;
                     } else {
                         handleTurn(false);
+                        if (checkIfBattleOver()) {
+                            resetPlayerEffects();
+                            break;
+                        }
                     }
                 } else {
                     System.out.println("Enemy goes first!");
                     handleTurn(false);
                     if (checkIfBattleOver()) {
+                        resetPlayerEffects();
                         break;
                     } else {
                         handleTurn(true);
+                        if (checkIfBattleOver()) {
+                            resetPlayerEffects();
+                            break;
+                        }
                     }
                 }
             }
+            resetPlayerEffects();
             if (!playerJustLost) {
                 if ((currentDungeon.getCurrentFloor().getNumber() == floorsPerDungeon)
                         && (currentDungeon.getNumber() == totalDungeons)) {
@@ -110,10 +125,22 @@ public class GameManager {
                 playerJustLost = false;
             }
         }
+        isGameActive = false;
         System.out.println("Final stats:");
         printPlayerStats();
         System.out.println("");
         System.out.println("Thanks for playing!");
+    }
+
+    private void resetPlayerEffects() {
+        if (player.getCurrentItemBuff() != null && !(player instanceof NanoBots)) {
+            int amtOfEffect = player.getCurrentItemBuff().getAmtOfEffect();
+            player.decreaseResource(amtOfEffect);
+            player.decreaseAtkPower(amtOfEffect);
+            player.decreaseSpeed(amtOfEffect);
+        }
+        player.setCurrentStatusEffect(null);
+        player.setCurrentItemBuff(null);
     }
 
     private void printFloorNavigation() {
@@ -134,11 +161,14 @@ public class GameManager {
         if (player.getCurrentStatusEffect() != null) {
             if (player.getCurrentStatusEffect().getTurnsElapsed() == player.getCurrentStatusEffect().getNumOfTurns()) {
                 System.out.println("The status effect " + player.getCurrentStatusEffect().getName() + " wore off....");
+                resetPlayerEffects();
                 player.setCurrentStatusEffect(null);
             } else {
                 System.out.println("You are under the effects of " + player.getCurrentStatusEffect().getName() + "!:");
                 System.out.println(player.getCurrentStatusEffect().getDescription());
-                System.out.println("You take " + player.getCurrentStatusEffect().getPower() + " damage!");
+                if (player.getCurrentStatusEffect().doesDamage) {
+                    System.out.println("You take " + player.getCurrentStatusEffect().getPower() + " damage!");
+                }
                 player.getCurrentStatusEffect().applyEffect(player);
             }
         }
@@ -160,6 +190,10 @@ public class GameManager {
         if (player.getCurrentItemBuff() != null) {
             if (player.getCurrentItemBuff().turnsUsedSoFar == player.getCurrentItemBuff().getDuration() + 1) {
                 System.out.println("Your " + player.getCurrentItemBuff().getName() + " has worn off....");
+                int amtOfEffect = player.getCurrentItemBuff().getAmtOfEffect();
+                player.decreaseResource(amtOfEffect);
+                player.decreaseAtkPower(amtOfEffect);
+                player.decreaseSpeed(amtOfEffect);
                 player.setCurrentItemBuff(null);
             } else {
                 System.out.println("You are under the effects of " + player.getCurrentItemBuff().getName() + "!");
@@ -170,14 +204,22 @@ public class GameManager {
 
     private void handleTurn(boolean isPlayerTurn) {
         AttackResult curResult = null;
-        if (isPlayerTurn) {
-            System.out.println("It's your turn now!");
-            curResult = displayTurnMenu();
-            handleResult(curResult, true);
+        if (player.getCurrentStatusEffect() != null
+                && player.getCurrentStatusEffect().getName().equals("Hacked")) {
+            System.out.println("You are Hacked! You can't attack or use items!");
+        } else if (currentEnemy.getCurrentStatusEffect() != null
+                && currentEnemy.getCurrentStatusEffect().getName().equals("Hacked")) {
+            System.out.println("Enemy is Hacked! They can't attack or use items!");
         } else {
-            System.out.println("It's the enemy's turn now!");
-            curResult = currentEnemy.takeTurn();
-            handleResult(curResult, false);
+                if (isPlayerTurn) {
+                    System.out.println("It's your turn now!");
+                    curResult = displayTurnMenu();
+                    handleResult(curResult, true);
+                } else {
+                    System.out.println("It's the enemy's turn now!");
+                    curResult = currentEnemy.takeTurn();
+                    handleResult(curResult, false);
+                }
         }
     }
 
@@ -209,6 +251,7 @@ public class GameManager {
             }
             // This satisfies Requirement #2
             if (player.getCurrentHP() <= 0) {
+                resetPlayerEffects();
                 isBattleOver = true;
                 System.out.println("You have died!");
                 System.out.println("You have lost all your items!");
@@ -235,7 +278,9 @@ public class GameManager {
 
     // This satisfies Requirement #2
     private void processPlayerLoss() {
+        resetPlayerEffects();
         playerJustLost = true;
+        player.getResource().restoreFullAmount();
         player.emptyInventory();
         player.setCurrentHP(player.getTotalHP());
         player.setCasting(false);
@@ -244,7 +289,8 @@ public class GameManager {
     }
 
     private void printCurrentStatsOfBattle() {
-        System.out.println("Enemy's HP: " + currentEnemy.getCurrentHP() + " | Enemy's Attack: " + currentEnemy.getAtkPower() + " | Enemy's Speed: " + currentEnemy.getSpeed());
+        System.out.println("Enemy's HP: " + currentEnemy.getCurrentHP() + " / " + currentEnemy.getMaxHP()
+                + " | Enemy's Attack: " + currentEnemy.getAtkPower() + " | Enemy's Speed: " + currentEnemy.getSpeed());
         printPlayerStats();
     }
 
@@ -270,9 +316,9 @@ public class GameManager {
         }
         if (result.getStatusEffect() != null) {
             if (isPlayerTurn) {
-                player.setCurrentStatusEffect(result.getStatusEffect());
-            } else {
                 currentEnemy.setCurrentStatusEffect(result.getStatusEffect());
+            } else {
+                player.setCurrentStatusEffect(result.getStatusEffect());
             }
         }
         if (result.getResourceSpent() > 0) {
@@ -282,7 +328,7 @@ public class GameManager {
 
     private int generateRandomChoice(int max) {
         Random rand = new Random();
-        return rand.nextInt(max + 1);
+        return rand.nextInt(max) + 1;
     }
 
     private int generateChoice(int validOptions) {

@@ -65,21 +65,20 @@ public class NanoBots extends Player {
     @Override
     public void levelUp() {
         this.level++;
-        this.expRequiredToLevel += 150;
-        this.baseNumOfBots += 1;
-        this.maxHPperBot += 1;
-        System.out.println("Base number of bots increased by 1!");
+        this.expRequiredToLevel = 10 * this.level;
+        this.baseNumOfBots = (int) ((Math.ceil((double) this.level / 15)) + (Math.ceil((double) this.level / 15)));
+        this.maxHPperBot = (int) ((Math.ceil((double) this.level / 400)) + Math.ceil((double) this.level / 450));
+        System.out.println("Base number of bots increased!");
         bots.clear();
         for (int i = 0; i < baseNumOfBots; i++) {
             bots.add(new IndividualNanoBot(maxHPperBot));
         }
         this.currentHP = baseNumOfBots * maxHPperBot;
         this.totalHP = baseNumOfBots * maxHPperBot;
-        this.speed += 2;
-        this.atkPower += 1;
-        this.resource.increaseTotalAmount(4);
+        this.speed = (int) Math.ceil((double) this.level / 5);
+        this.atkPower = (int) Math.ceil((double) this.level / 10);
         this.resource.restoreFullAmount();
-        this.physicalAttack.increaseDamageAmt(2);
+        this.physicalAttack.setDamageAmt((int) Math.ceil((double) this.level / 30));
     }
 
     @Override

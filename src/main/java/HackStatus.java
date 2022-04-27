@@ -6,6 +6,7 @@ public class HackStatus extends StatusEffect {
         super(power, numOfTurns);
         this.name = "Hacked";
         this.description = "A status effect that stuns and damages the enemy for " + this.numOfTurns + " turns.";
+        this.doesDamage = true;
     }
 
 }

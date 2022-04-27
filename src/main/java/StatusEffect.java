@@ -11,11 +11,13 @@ public abstract class StatusEffect {
     int power;
     int turnsElapsed;
     int numOfTurns;
+    boolean doesDamage;
 
     public StatusEffect(int power, int numOfTurns) {
         this.power = power;
-        this.numOfTurns = numOfTurns;
+        this.numOfTurns = numOfTurns + 2;
         this.turnsElapsed = 0;
+        this.doesDamage = false;
     }
 
     public void applyEffect(Player player) {

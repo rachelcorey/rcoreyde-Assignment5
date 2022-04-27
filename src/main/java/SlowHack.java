@@ -17,6 +17,8 @@ public class SlowHack extends Hack {
 
     @Override
     public AttackResult useSkill(String nameOfUser) {
+        Player player = GameManager.getInstance().getPlayer();
+        this.damageAmt = (int) Math.floor(player.getLevel() * 0.60);
         if (castingTurnsElapsed == numberOfTurnsToCast) {
             castingTurnsElapsed = 0;
             GameManager.getInstance().getPlayer().setCasting(false);

@@ -7,7 +7,7 @@ public class PowerConduit extends Item {
         this.name = "Power Conduit";
         this.description = "A conduit crackling with power that grants your bot extra Resource and Attack Power"
                 + " for " + this.duration + " turns.";
-        this.amtOfEffect = 10 * (level + 1);
+        this.amtOfEffect = 10 + (level + 1);
     }
 
     @Override
@@ -17,6 +17,9 @@ public class PowerConduit extends Item {
 
     @Override
     public void use(Player player) {
+        if (player instanceof NanoBots) {
+            this.amtOfEffect = level + 1;
+        }
         System.out.println("Your bot has gained " + this.amtOfEffect + " Attack Power, " + this.amtOfEffect + " Speed, and " + this.amtOfEffect + " Resource from"
                 + " the Power Conduit this turn!");
         player.setCurrentStatusEffect(new ChargedUp(this.duration, this.amtOfEffect));

@@ -14,6 +14,8 @@ public class FastHack extends Hack {
 
     @Override
     public AttackResult useSkill(String nameOfUser) {
+        Player player = GameManager.getInstance().getPlayer();
+        this.damageAmt = (int) Math.floor(player.getLevel() * 0.40);
         return new AttackResult(nameOfUser + "'s Hack did " + damageAmt + " damage and applied the Hack effect!",
                 damageAmt, resourceCost, this.statusEffect);
     }

@@ -96,6 +96,17 @@ public abstract class Player {
         return currentItemBuff;
     }
 
+    public void decreaseAtkPower(int atkPower) {
+        this.atkPower -= atkPower;
+    }
+
+    public void decreaseSpeed(int speed) {
+        this.speed -= speed;
+    }
+
+    public void decreaseResource(int resource) {
+        this.resource.decreaseCurrentAmount(resource);
+    }
 
     public void setCurrentStatusEffect(StatusEffect currentStatusEffect) {
         this.currentStatusEffect = currentStatusEffect;
@@ -119,21 +130,26 @@ public abstract class Player {
 
     public void levelUp() {
         this.level++;
-        this.expRequiredToLevel += 150;
-        this.currentHP += 10;
-        this.totalHP += 10;
-        this.speed += 5;
-        this.atkPower += 5;
-        this.resource.increaseTotalAmount(10);
+        this.expRequiredToLevel = 10 * this.level;
+        this.expCurrent = 0;
+        this.currentHP = this.level * 3;
+        this.totalHP = this.level * 3;
+        this.speed = this.level * 3;
+        this.atkPower = this.level * 2;
         this.resource.restoreFullAmount();
-        this.physicalAttack.increaseDamageAmt(5);
-        this.specialSkill[0].increaseDamageAmt(5);
-        this.specialSkill[1].increaseDamageAmt(5);
+        this.physicalAttack.setDamageAmt(this.level + 1);
+        this.specialSkill[0].setDamageAmt(this.level + 1);
+        this.specialSkill[1].setDamageAmt(this.level + 1);
     }
 
+    public Resource getResource() {
+        return resource;
+    }
 
     public void useResource(int resource) {
-        this.resource.decreaseCurrentAmount(resource);
+        if (this.resource.getCurrentAmount() >= resource) {
+            this.resource.decreaseCurrentAmount(resource);
+        }
     }
 
     public String getName() {

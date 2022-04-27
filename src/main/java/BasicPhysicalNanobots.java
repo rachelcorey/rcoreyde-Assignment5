@@ -16,9 +16,9 @@ public class BasicPhysicalNanobots extends BasicPhysical {
         totalDamage = player.getNumOfBots() * damageAmt;
         Random rand = new Random();
         if (rand.nextInt(100) < 100 * percentToMiss) {
-            return new AttackResult("Each of " + nameOfUser + "'s Nanobots' " + name + " missed!", 0, resourceCost, null);
+            return new AttackResult("Each of " + nameOfUser + "'s Nanobots' " + name + " missed!", 0, 0, null);
         }
         return new AttackResult("Each of " + nameOfUser + "'s Nanobots' " + name + " did " + damageAmt + " damage! Total damage was " + totalDamage + "! ",
-                totalDamage, resourceCost, statusEffect);
+                totalDamage, 0, statusEffect);
     }
 }
