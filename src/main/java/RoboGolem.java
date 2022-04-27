@@ -14,6 +14,7 @@ public class RoboGolem extends Player {
         specialSkill[1] = new MultiSlash(this.atkPower);
         this.specialSkill[1].damageAmt += this.atkPower;
         this.physicalAttack.damageAmt += this.atkPower;
+        this.implementPlayerType(playerType);
     }
 
     @Override

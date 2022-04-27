@@ -22,7 +22,7 @@ public class Main {
         System.out.println("2. No");
         int choice = scanner.nextInt();
         if (choice == 1) {
-            new GameManager("Klapaucius", "NANOBOTS", PlayerType.RADIOACTIVEBOT, false);
+            new GameManager("Klapaucius", "ROBOGOLEM", PlayerType.RADIOACTIVEBOT, false);
         } else {
             showDialogAndStartGame();
         }

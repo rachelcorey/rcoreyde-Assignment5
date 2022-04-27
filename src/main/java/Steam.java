@@ -6,7 +6,6 @@ public class Steam extends Resource {
         this.name = "Steam";
         this.currentAmount = 20;
         this.totalAmount = 20;
-        this.regenAmtPerTurn = 2;
     }
 
 }

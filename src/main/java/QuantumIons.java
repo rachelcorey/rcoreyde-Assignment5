@@ -6,6 +6,5 @@ public class QuantumIons extends Resource {
         this.name = "Quantum Ions";
         this.currentAmount = 50;
         this.totalAmount = 50;
-        this.regenAmtPerTurn = 5;
     }
 }

@@ -30,6 +30,7 @@ public class GameManager {
         this.worldMap = generateWorldMap();
         currentDungeon = worldMap.get(0);
         isGameActive = true;
+        player.setCurrentHP(2);
         printPlayerStats();
         conductHumanPlayerGame();
     }
@@ -94,7 +95,11 @@ public class GameManager {
                     System.out.println("You have completed the game!");
                     break;
                 }
-                printFloorNavigation();
+                if (player.getCurrentHP() <= (player.getTotalHP() * 0.15)) {
+                    processPlayerFifteenPercentHP();
+                } else {
+                    printFloorNavigation();
+                }
             } else {
                 playerJustLost = false;
             }
@@ -207,6 +212,19 @@ public class GameManager {
         return isBattleOver;
     }
 
+    private void processPlayerFifteenPercentHP() {
+        System.out.println("");
+        System.out.println("Your HP is less than or equal to 15% of your total HP!");
+        System.out.println("You will be healed to full HP and returned to the beginning of the dungeon!");
+        System.out.println("");
+        playerJustLost = true;
+        player.setCurrentHP(player.getTotalHP());
+        player.setCasting(false);
+        player.resetSpells();
+        currentDungeon.setCurrentFloor(0);
+        currentDungeon.getCurrentFloor().regenerateEnemy();
+    }
+
     private void processPlayerLoss() {
         playerJustLost = true;
         player.emptyInventory();
@@ -226,7 +244,7 @@ public class GameManager {
         if (player instanceof NanoBots) {
             System.out.println("Current number of NanoBots: " + ((NanoBots) player).getNumOfBots());
         }
-        System.out.println("Your HP: " + player.getCurrentHP() + " | Your " + player.resource.getName() + " "
+        System.out.println("Your HP: " + player.getCurrentHP() + " / " + player.getTotalHP() + " | Your " + player.resource.getName() + " "
                 + "amount: " + player.resource.getCurrentAmount() + " | Your Attack: " + player.getAtkPower() + " | Your Speed: " + player.getSpeed());
         System.out.println("Your Level: " + player.getLevel() + " | XP: " + player.getExpCurrent() + " / " + player.getExpRequiredToLevel());
         System.out.println("");

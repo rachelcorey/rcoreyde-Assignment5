@@ -27,6 +27,7 @@ public class NanoBots extends Player {
         specialSkill[1] = new BuildFourBots(this.atkPower);
         this.physicalAttack = new BasicPhysicalNanobots(atkPower / 2);
         this.physicalAttack.damageAmt = this.atkPower;
+        this.implementPlayerType(playerType);
     }
 
     @Override

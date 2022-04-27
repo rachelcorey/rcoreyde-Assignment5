@@ -33,6 +33,10 @@ public class Floor {
         return enemy;
     }
 
+    public void regenerateEnemy() {
+        enemy = generateEnemy();
+    }
+
     public Enemy getEnemy() {
         return enemy;
     }

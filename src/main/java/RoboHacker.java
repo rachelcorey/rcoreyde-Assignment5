@@ -16,6 +16,7 @@ public class RoboHacker extends Player {
         specialSkill[1] = new SlowHack(this.atkPower + 10);
         this.specialSkill[1].damageAmt += this.atkPower;
         this.physicalAttack.damageAmt += this.atkPower;
+        this.implementPlayerType(playerType);
     }
 
     @Override

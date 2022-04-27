@@ -36,7 +36,6 @@ public abstract class Player {
         this.currentItemBuff = null;
         this.inventory = new ArrayList<>();
         this.physicalAttack = new BasicPhysical(atkPower / 2);
-        this.implementPlayerType(playerType);
     }
 
     public void implementPlayerType(PlayerType playerType) {
@@ -150,8 +149,7 @@ public abstract class Player {
     public boolean addExp(int exp) {
         this.expCurrent += exp;
         if (this.expCurrent >= this.expRequiredToLevel) {
-            int rollover = this.expCurrent - this.expRequiredToLevel;
-            this.expCurrent = rollover;
+            this.expCurrent = this.expCurrent - this.expRequiredToLevel;
             this.levelUp();
             return true;
         }
