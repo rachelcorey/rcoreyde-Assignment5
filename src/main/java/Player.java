@@ -131,9 +131,8 @@ public abstract class Player {
     public void levelUp() {
         this.level++;
         this.expRequiredToLevel = 10 * this.level;
-        this.expCurrent = 0;
         this.currentHP = this.level * 3;
-        this.totalHP = this.level * 3;
+        this.totalHP = this.level * 5;
         this.speed = this.level * 3;
         this.atkPower = this.level * 2;
         this.resource.restoreFullAmount();

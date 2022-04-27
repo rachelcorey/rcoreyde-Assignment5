@@ -11,10 +11,10 @@ import java.util.Scanner;
  */
 public class GameManager {
 
-    private static GameManager INSTANCE;
     static Player player;
     static String playerClass;
     static boolean isHumanPlayerGame;
+    private static GameManager INSTANCE;
     boolean isGameActive;
     boolean playerJustLost;
     boolean isBattleOver;
@@ -211,15 +211,15 @@ public class GameManager {
                 && currentEnemy.getCurrentStatusEffect().getName().equals("Hacked")) {
             System.out.println("Enemy is Hacked! They can't attack or use items!");
         } else {
-                if (isPlayerTurn) {
-                    System.out.println("It's your turn now!");
-                    curResult = displayTurnMenu();
-                    handleResult(curResult, true);
-                } else {
-                    System.out.println("It's the enemy's turn now!");
-                    curResult = currentEnemy.takeTurn();
-                    handleResult(curResult, false);
-                }
+            if (isPlayerTurn) {
+                System.out.println("It's your turn now!");
+                curResult = displayTurnMenu();
+                handleResult(curResult, true);
+            } else {
+                System.out.println("It's the enemy's turn now!");
+                curResult = currentEnemy.takeTurn();
+                handleResult(curResult, false);
+            }
         }
     }
 
@@ -406,7 +406,7 @@ public class GameManager {
                     }
                     player.useItem(player.getInventory().get(choice - 1));
                     player.getInventory().remove(player.getInventory().get(choice - 1));
-                    result = new AttackResult("", 0,0,  null);
+                    result = new AttackResult("", 0, 0, null);
                     isValidInput = true;
                 } else {
                     System.out.println("Invalid choice!");

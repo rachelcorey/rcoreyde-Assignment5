@@ -1,6 +1,6 @@
 package main.java;
 
-public class ChargedUp extends StatusEffect{
+public class ChargedUp extends StatusEffect {
 
     public ChargedUp(int power, int numOfTurns) {
         super(power, numOfTurns);
