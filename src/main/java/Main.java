@@ -23,7 +23,7 @@ public class Main {
         System.out.println("2. No");
         int choice = scanner.nextInt();
         if (choice == 1) {
-            createGameManager("Klapaucius", "ROBOGOLEM", PlayerType.RADIOACTIVEBOT, false);
+            createGameManager("Klapaucius", "NANOBOTS", PlayerType.RADIOACTIVEBOT, false);
         } else {
             showDialogAndStartGame();
         }
@@ -71,6 +71,8 @@ public class Main {
             case 3:
                 classChoiceString = "NANOBOTS";
                 break;
+            default:
+                break;
         }
         switch (moduleChoice) {
             case 1:
@@ -84,6 +86,8 @@ public class Main {
                 break;
             case 4:
                 moduleChoiceEnum = PlayerType.RADIOACTIVEBOT;
+                break;
+            default:
                 break;
         }
         createGameManager(name, classChoiceString, moduleChoiceEnum, true);

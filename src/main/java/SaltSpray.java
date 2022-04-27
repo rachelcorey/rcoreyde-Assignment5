@@ -19,7 +19,7 @@ public class SaltSpray extends Skill {
 
     @Override
     public AttackResult useSkill(String nameOfUser) {
-        return new AttackResult( nameOfUser + "'s Salt Spray did " + damageAmt + " damage and applied the Rust effect for the rest of the battle!",
+        return new AttackResult(nameOfUser + "'s Salt Spray did " + damageAmt + " damage and applied the Rust effect for the rest of the battle!",
                 damageAmt, resourceCost, this.statusEffect);
     }
 }

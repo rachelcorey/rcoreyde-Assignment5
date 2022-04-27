@@ -47,6 +47,8 @@ public class Enemy implements EnemyPlan {
                 this.setAtkPower((int) (15 * (Math.floor(floorNum / 2))));
                 this.setExpAwarded(200 * (1 + floorNum));
                 break;
+            default:
+                break;
         }
         this.setCurrentHP(maxHP);
         this.physicalSkill = new BasicPhysical(atkPower/2);
@@ -153,7 +155,6 @@ public class Enemy implements EnemyPlan {
         return currentStatusEffect;
     }
 
-
     public void setLevel(int level) {
         this.level = level;
     }
@@ -176,10 +177,6 @@ public class Enemy implements EnemyPlan {
 
     public void setExpAwarded(int expAwarded) {
         this.expAwarded = expAwarded;
-    }
-
-    public void setPowerLevel(PowerLevel powerLevel) {
-        this.powerLevel = powerLevel;
     }
 
     public int getFloorNum() {

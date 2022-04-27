@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-import static java.lang.System.exit;
-
 public class GameManager {
 
     private static GameManager INSTANCE;
@@ -52,8 +50,8 @@ public class GameManager {
         // Game loop
         while (isGameActive) {
             currentEnemy = currentDungeon.getCurrentFloor().getEnemy();
-            System.out.println("You are in dungeon " + currentDungeon.getNumber() + " on Floor " +
-                    "number " + currentDungeon.getCurrentFloor().getNumber() + "!");
+            System.out.println("You are in dungeon " + currentDungeon.getNumber() + " on Floor "
+                    + "number " + currentDungeon.getCurrentFloor().getNumber() + "!");
             System.out.println("");
 
             System.out.println("You are now facing " + currentEnemy.getName() + "!");
@@ -86,8 +84,8 @@ public class GameManager {
                 }
             }
             if (!playerJustLost) {
-                if ((currentDungeon.getCurrentFloor().getNumber() == floorsPerDungeon) &&
-                        (currentDungeon.getNumber() == totalDungeons)) {
+                if ((currentDungeon.getCurrentFloor().getNumber() == floorsPerDungeon)
+                        && (currentDungeon.getNumber() == totalDungeons)) {
                     isGameActive = false;
                     System.out.println("You have completed the game!");
                     break;
@@ -131,8 +129,8 @@ public class GameManager {
         }
         if (currentEnemy.getCurrentStatusEffect() != null) {
             if (currentEnemy.getCurrentStatusEffect().getTurnsElapsed() == currentEnemy.getCurrentStatusEffect().getNumOfTurns()) {
-                System.out.println("The status effect " + currentEnemy.getCurrentStatusEffect().getName() + " wore off on " +
-                        currentEnemy.getName() + "....");
+                System.out.println("The status effect " + currentEnemy.getCurrentStatusEffect().getName() + " wore off on "
+                        + currentEnemy.getName() + "....");
                 currentEnemy.setCurrentStatusEffect(null);
             } else {
                 System.out.println("Enemy is under the effects of " + currentEnemy.getCurrentStatusEffect().getName() + "!:");
@@ -224,8 +222,8 @@ public class GameManager {
         if (player instanceof NanoBots) {
             System.out.println("Current number of NanoBots: " + ((NanoBots) player).getNumOfBots());
         }
-        System.out.println("Your HP: " + player.getCurrentHP() + " | Your " + player.resource.getName() + " " +
-                "amount: " + player.resource.getCurrentAmount() + " | Your Attack: " + player.getAtkPower() + " | Your Speed: " + player.getSpeed());
+        System.out.println("Your HP: " + player.getCurrentHP() + " | Your " + player.resource.getName() + " "
+                + "amount: " + player.resource.getCurrentAmount() + " | Your Attack: " + player.getAtkPower() + " | Your Speed: " + player.getSpeed());
         System.out.println("Your Level: " + player.getLevel() + " | XP: " + player.getExpCurrent() + " / " + player.getExpRequiredToLevel());
         System.out.println("");
     }
@@ -365,5 +363,9 @@ public class GameManager {
 
     public void setBattleOver(boolean battleOver) {
         isBattleOver = battleOver;
+    }
+
+    public boolean isGameActive() {
+        return isGameActive;
     }
 }

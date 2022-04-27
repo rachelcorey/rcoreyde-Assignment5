@@ -25,7 +25,7 @@ public class NanoBots extends Player {
         this.specialSkill = new Skill[2];
         specialSkill[0] = new BuildOneBot(this.atkPower);
         specialSkill[1] = new BuildFourBots(this.atkPower);
-        this.physicalAttack = new BasicPhysicalNanobots(atkPower/2);
+        this.physicalAttack = new BasicPhysicalNanobots(atkPower / 2);
         this.physicalAttack.damageAmt = this.atkPower;
     }
 
@@ -41,7 +41,7 @@ public class NanoBots extends Player {
             }
             System.out.println("Bots were reset to " + baseNumOfBots + ". Any injured bots were recycled!");
         } else {
-           resetHP();
+            resetHP();
         }
     }
 

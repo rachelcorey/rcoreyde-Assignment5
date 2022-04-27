@@ -12,7 +12,7 @@ public class EnemyHack extends Hack {
 
     @Override
     public AttackResult useSkill(String nameOfUser) {
-        return new AttackResult( nameOfUser + "'s Hack did " + damageAmt + " damage and applied the Hack effect!",
+        return new AttackResult(nameOfUser + "'s Hack did " + damageAmt + " damage and applied the Hack effect!",
                 damageAmt, resourceCost, this.statusEffect);
     }
 }

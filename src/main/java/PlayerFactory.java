@@ -14,6 +14,8 @@ public class PlayerFactory {
             case "NANOBOTS":
                 player = new NanoBots(name, playerType);
                 break;
+            default:
+                break;
         }
 
         return player;

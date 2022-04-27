@@ -14,7 +14,7 @@ public class EnemyNameGenerator {
 
     private static String getRandomPrefix() {
         Random rand = new Random();
-        String[] prefixes = {"Automatic","Crackling","Bionic", "Flaming", "Frozen", "Giant", "Gigantic", "Grim",
+        String[] prefixes = {"Automatic", "Crackling", "Bionic", "Flaming", "Frozen", "Giant", "Gigantic", "Grim",
                 "Huge", "Hulking", "Icy", "Infernal", "Insane", "Lethal", "Luminous", "Mysterious", "Mystical",
                 "Nuclear", "Ominous", "Piercing", "Electric", "Ionic", "Maniacal", "Mechanical", "Mechanized"};
         return prefixes[rand.nextInt(prefixes.length)];
@@ -29,7 +29,7 @@ public class EnemyNameGenerator {
 
     private static String getRandomBossTitle() {
         Random rand = new Random();
-        String[] bossTitles = {" The Crusher",", MegaBot"," The Circuit-Breaker", " The Destroyer", ", Giga-Chad", ", Maniacal Mainframe",
+        String[] bossTitles = {" The Crusher", ", MegaBot", " The Circuit-Breaker", " The Destroyer", ", Giga-Chad", ", Maniacal Mainframe",
                 ", Supreme Techno-Giant", ", Fearsome Dragon-Bot", " The Cyber-Ruin", ", Unrivalled Neuro-Network",
                 " The De-Compiler"};
         return bossTitles[rand.nextInt(bossTitles.length)];

@@ -20,7 +20,7 @@ public class SlowHack extends Hack {
         if (castingTurnsElapsed == numberOfTurnsToCast) {
             castingTurnsElapsed = 0;
             GameManager.getInstance().getPlayer().setCasting(false);
-            return new AttackResult( nameOfUser + "'s Hack did " + damageAmt + " damage and applied the Hack effect!",
+            return new AttackResult(nameOfUser + "'s Hack did " + damageAmt + " damage and applied the Hack effect!",
                     damageAmt, 0, this.statusEffect);
         } else {
             int cost = 0;

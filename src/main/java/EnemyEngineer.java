@@ -4,7 +4,7 @@ public class EnemyEngineer {
 
     EnemyBuilder enemyBuilder;
 
-    public EnemyEngineer(EnemyBuilder enemyBuilder){
+    public EnemyEngineer(EnemyBuilder enemyBuilder) {
         this.enemyBuilder = enemyBuilder;
     }
 
@@ -15,7 +15,7 @@ public class EnemyEngineer {
         enemyBuilder.buildInventory();
     }
 
-    public Enemy getEnemy(){
+    public Enemy getEnemy() {
         return enemyBuilder.getEnemy();
     }
 }

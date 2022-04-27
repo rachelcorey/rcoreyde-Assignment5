@@ -2,7 +2,7 @@ package main.java;
 
 import java.util.Random;
 
-public class MultiSlash extends Skill{
+public class MultiSlash extends Skill {
 
     public MultiSlash(int powerModifier) {
         super(powerModifier);
@@ -24,7 +24,7 @@ public class MultiSlash extends Skill{
         return new AttackResult( name + " hit " + hitNumber + " times and did " + damageAmt + " damage!", damageAmt, resourceCost, null);
     }
 
-    private int hitNumber() {
+    private int hitNumber(){
         Random rand = new Random();
         return rand.nextInt(5) + 1;
     }

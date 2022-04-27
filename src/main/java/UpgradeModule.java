@@ -2,7 +2,7 @@ package main.java;
 
 public class UpgradeModule extends Item {
 
-    public UpgradeModule (int level) {
+    public UpgradeModule(int level) {
         super(level);
         this.name = "Upgrade Module";
         this.description = "A rare module that allows you to upgrade your bot by " + level + " levels.";
@@ -17,7 +17,7 @@ public class UpgradeModule extends Item {
     @Override
     public void use(Player player) {
         for (int i = 0; i < amtOfEffect; i++) {
-           player.levelUp();
+            player.levelUp();
         }
         System.out.println("You have upgraded your bot by " + amtOfEffect + " levels!!!");
     }

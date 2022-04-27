@@ -9,7 +9,7 @@ public abstract class Item {
     int duration;
     int turnsUsedSoFar;
 
-    public Item (int level) {
+    public Item(int level) {
         this.level = level;
         this.turnsUsedSoFar = 0;
     }

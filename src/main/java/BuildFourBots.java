@@ -25,7 +25,6 @@ public class BuildFourBots extends BuildOneBot {
             player.addFourBotsEach();
             return new AttackResult( nameOfUser + "'s Bots each built four bots each! " + nameOfUser + " now has " + player.getNumOfBots() + " bots!",
                     0, 0, this.statusEffect);
-
         } else {
             int cost = 0;
             if (castingTurnsElapsed == 0) {

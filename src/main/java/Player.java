@@ -35,7 +35,7 @@ public abstract class Player {
         this.currentStatusEffect = null;
         this.currentItemBuff = null;
         this.inventory = new ArrayList<>();
-        this.physicalAttack = new BasicPhysical(atkPower/2);
+        this.physicalAttack = new BasicPhysical(atkPower / 2);
         this.implementPlayerType(playerType);
     }
 
@@ -53,7 +53,7 @@ public abstract class Player {
             this.atkPower = 10;
             this.physicalAttack.setDamageAmt(5);
         }
-    };
+    }
 
     public AttackResult physicalAttack() {
         return physicalAttack.useSkill(this.getName());
