@@ -1,6 +1,7 @@
 package main.java;
 
 public class Floor {
+    String hateYou;
     int number;
     Enemy enemy;
 
